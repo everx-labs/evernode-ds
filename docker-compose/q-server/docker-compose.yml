@@ -1,0 +1,26 @@
+version: '2.3'
+services:
+  q-server:
+    build:
+      context: ./build
+    # image: tonlabs/q-server:latest
+    container_name: q-server
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=q-server
+      - VIRTUAL_PORT=4000
+      - Q_DATABASE_SERVER
+      - Q_SLOW_DATABASE_SERVER
+      - Q_REQUESTS_MODE
+      - Q_REQUESTS_SERVER
+      - Q_REQUESTS_TOPIC
+      - Q_DATABASE_MAX_SOCKETS
+      - Q_SLOW_DATABASE_MAX_SOCKETS
+    networks:
+      - proxy_nw
+    expose:
+      - "4000"
+    mem_limit: 5G
+networks:
+  proxy_nw:
+    external: true

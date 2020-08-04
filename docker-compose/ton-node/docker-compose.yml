@@ -1,0 +1,41 @@
+version: '2.2'
+services:
+  node:
+    build:
+      context: ./build
+    # image: "${NODE_IMAGE}"
+    container_name: rnode
+    restart: unless-stopped
+    environment:
+      ADNL_PORT:
+      VALIDATOR_NAME:
+      NETWORK_TYPE:
+      CONFIGS_PATH:
+      STATSD_DOMAIN:
+      STATSD_PORT:
+      STAKE:
+      MSIG_ENABLE:
+      SDK_URL:
+    ports:
+      - "${ADNL_PORT}:${ADNL_PORT}/udp"
+    networks:
+      - proxy_nw
+    volumes:
+      - ./configs/:/ton-node/configs/
+      - ./logs/:/ton-node/logs/
+      - DB:/ton-node/node_db/
+      - /tmp/metrics/:/tmp/metrics/
+    command: ["normal"]
+    mem_limit: "${MEM_LIMIT}"
+    logging:
+      driver: json-file
+      options:
+        max-size: "1000m"
+        max-file: "100"
+    cap_add:
+      - SYS_PTRACE
+networks:
+  proxy_nw:
+    external: true
+volumes:
+  DB:

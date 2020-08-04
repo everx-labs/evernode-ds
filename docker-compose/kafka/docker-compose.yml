@@ -1,0 +1,141 @@
+version: '2.3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.3.1
+    container_name: zookeeper
+    restart: unless-stopped
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - proxy_nw
+    healthcheck:
+      test: ["CMD-SHELL", "echo ruok | nc -w 2 zookeeper 2181"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  kafka:
+    image: confluentinc/cp-kafka:5.3.1
+    container_name: kafka
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    expose:
+      - "9092"
+    networks:
+      - proxy_nw
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://${ADVERTISED_LISTENER}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 4
+      KAFKA_JMX_PORT: 9581
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_LOG_ROLL_MS: 600000
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 300000
+      KAFKA_CLEANUP_POLICY: delete
+      KAFKA_RETENTION_MS: 43200000
+      KAFKA_MESSAGE_MAX_BYTES: 3000000
+      KAFKA_RECEIVE_MESSAGE_MAX_BYTES: 3000000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 3000000
+    volumes:
+      - data:/var/lib/kafka/data
+  connect:
+    image: confluentinc/cp-kafka-connect:5.3.1
+    container_name: connect
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: 'kafka:29092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      # Assumes image is based on confluentinc/kafka-connect-datagen:latest which is pulling 5.1.1 Connect image
+      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.2.1.jar
+      CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+      CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+      KAFKA_JMX_PORT: 9584
+      CONNECT_FETCH_MESSAGE_MAX_BYTES: 3000000
+      CONNECT_MAX_REQUEST_SIZE: 3000000
+      CONNECT_MAX_PARTITION_FETCH_BYTES: 3000000
+    networks:
+      - proxy_nw
+    volumes:
+      - ./files/kafka-connect-arangodb:/usr/share/java/kafka-connect-arangodb
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -f http://connect:8083/"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    mem_limit: 3G
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:5.3.1
+    hostname: schema-registry
+    container_name: schema-registry
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+      - kafka
+    expose:
+      - 8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_JMX_PORT: 9582
+    networks:
+      - proxy_nw
+
+
+    networks:
+      - proxy_nw
+    volumes:
+      - ./launch.sh:/etc/confluent/docker/launch
+
+  check-connect:
+    build:
+      context: build_check
+    container_name: check-connect
+    restart: unless-stopped
+    depends_on:
+      connect:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "/work/check.sh connect"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    networks:
+      - proxy_nw
+
+networks:
+  proxy_nw:
+    external: true
+
+volumes:
+  data:

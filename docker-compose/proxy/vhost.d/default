@@ -1,0 +1,10 @@
+## Start of configuration add by letsencrypt container
+location ^~ /.well-known/acme-challenge/ {
+    auth_basic off;
+    auth_request off;
+    allow all;
+    root /usr/share/nginx/html;
+    try_files $uri =404;
+    break;
+}
+## End of configuration add by letsencrypt container
