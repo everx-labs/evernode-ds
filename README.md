@@ -1,6 +1,6 @@
 # README
 
-This HOWTO contains instructions on how to build and configure a full node in TON blockchain. The instructions and scripts below were verified on Ubuntu 20.04.
+This HOWTO contains instructions on how to build and configure a TON OS DApp Server in TON blockchain. The instructions and scripts below were verified on Ubuntu 20.04.
 # Getting Started
 
 ## 1. System Requirements
