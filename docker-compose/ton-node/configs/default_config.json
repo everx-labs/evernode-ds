@@ -51,7 +51,7 @@
             "message_timeout_ms": 100,
             "topic": "accounts",
             "attempt_timeout_ms": 100,
-            "message_max_size": 3000000,
+            "message_max_size": 4000000,
             "big_messages_storage": "big-accounts"
         },
         "block_proof_producer": {
