@@ -73,7 +73,7 @@ rm -f "${TMP_DIR}/kafka.log"
 
 OK=0
 while [ $OK -ne 100 ]; do
-    OK=$(dockerps | awk '
+    OK=$(docker ps --format 'table {{.Image}} \t {{.Names}} \t {{.Status}}' | awk '
         BEGIN { OK = 0 }
         {
             if (($2 == "check-connect") && ($3 == "Up")) {
