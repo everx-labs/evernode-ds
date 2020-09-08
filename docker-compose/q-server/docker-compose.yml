@@ -9,13 +9,13 @@ services:
     environment:
       - VIRTUAL_HOST=q-server
       - VIRTUAL_PORT=4000
-      - Q_DATABASE_SERVER
-      - Q_SLOW_DATABASE_SERVER
+      - Q_DATA_MUT
+      - Q_DATA_HOT
+      - Q_SLOW_QUERIES_MUT
+      - Q_SLOW_QUERIES_HOT
       - Q_REQUESTS_MODE
       - Q_REQUESTS_SERVER
       - Q_REQUESTS_TOPIC
-      - Q_DATABASE_MAX_SOCKETS
-      - Q_SLOW_DATABASE_MAX_SOCKETS
     networks:
       - proxy_nw
     expose:
