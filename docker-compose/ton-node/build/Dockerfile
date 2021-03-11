@@ -33,7 +33,7 @@ COPY rust_install.sh /tmp/rust_install.sh
 RUN bash -c "/tmp/rust_install.sh 1.49.0"
 
 WORKDIR /tonlabs/ton-node
-RUN cargo build --release --features "external_db,metrics"
+RUN cargo update && cargo build --release --features "external_db,metrics"
 
 FROM ubuntu:18.04 as build2
 
