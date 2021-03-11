@@ -30,10 +30,10 @@ RUN curl https://packages.confluent.io/deb/5.5/archive.key | apt-key add;\
 
 # Get Rust
 COPY rust_install.sh /tmp/rust_install.sh
-RUN bash -c "/tmp/rust_install.sh 1.48.0"
+RUN bash -c "/tmp/rust_install.sh 1.49.0"
 
 WORKDIR /tonlabs/ton-node
-RUN cargo build --release --features "external_db,metrics"
+RUN cargo update && cargo build --release --features "external_db,metrics"
 
 FROM ubuntu:18.04 as build2
 
@@ -56,7 +56,7 @@ RUN apt-get update && apt-get install -y \
 
 # Get Rust
 COPY rust_install.sh /tmp/rust_install.sh
-RUN bash -c "/tmp/rust_install.sh 1.48.0"
+RUN bash -c "/tmp/rust_install.sh 1.49.0"
 
 COPY --from=build /tonlabs/ton-node/target/release/ton_node /ton-node/
 COPY entrypoint.sh /
