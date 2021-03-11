@@ -1,4 +1,4 @@
-FROM node:10.11.0-stretch
+FROM node:12-buster
 
 USER root
 
@@ -41,6 +41,6 @@ RUN rustup component add rustfmt-preview && rustup target add i686-unknown-linux
 WORKDIR /home/node
 USER node
 COPY ton-q-server /home/node/
-RUN cd /home/node && npm install --production
+RUN npm install --production
 EXPOSE 4000
 ENTRYPOINT ["node", "index.js"]
