@@ -41,15 +41,15 @@ output = +
 
 [rocksdb]
 # encryption-keyfile=/your-encryption-file
-# 30% RAM in bytes (total RAM: 23622320128 B or 32 GiB)
-block-cache-size = 10307921510
-# 30% RAM in bytes (total RAM: 23622320128 B or 32 GiB)
-total-write-buffer-size = 10307921510
+# 30% RAM in bytes (total RAM: 23622320128 B or 22 GiB)
+block-cache-size = 7086696038
+# 30% RAM in bytes (total RAM: 23622320128 B or 22 GiB)
+total-write-buffer-size = 7086696038
 enforce-block-cache-size-limit = true
 
 [query]
-memory-limit = 512000000
+memory-limit = 100000000
 
 [cache]
-# 20% RAM in bytes (total RAM: 23622320128 B or 32 GiB)
-cache.size = 6871947674
+# 20% RAM in bytes (total RAM: 23622320128 B or 22 GiB)
+cache.size = 4724464025

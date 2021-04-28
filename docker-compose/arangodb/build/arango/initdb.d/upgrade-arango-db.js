@@ -10,16 +10,22 @@ const BLOCKCHAIN = {
                 sortedIndex(['seq_no', 'gen_utime']),
                 sortedIndex(['gen_utime']),
                 sortedIndex(['workchain_id', 'shard', 'seq_no']),
+                sortedIndex(['workchain_id', 'shard', 'gen_utime']),
                 sortedIndex(['workchain_id', 'seq_no']),
+                sortedIndex(['workchain_id', 'key_block', 'seq_no']),
                 sortedIndex(['workchain_id', 'gen_utime']),
+                sortedIndex(['workchain_id', 'tr_count', 'gen_utime']),
                 sortedIndex(['master.min_shard_gen_utime']),
                 sortedIndex(['prev_ref.root_hash', '_key']),
+                sortedIndex(['prev_alt_ref.root_hash', '_key']),
             ],
         },
         accounts: {
             indexes: [
                 sortedIndex(['last_trans_lt']),
                 sortedIndex(['balance']),
+                sortedIndex(['code_hash']),
+                sortedIndex(['code_hash', 'balance']),
             ],
         },
         messages: {
@@ -32,6 +38,17 @@ const BLOCKCHAIN = {
                 sortedIndex(['dst', 'created_at']),
                 sortedIndex(['created_lt']),
                 sortedIndex(['created_at']),
+                sortedIndex(['code_hash', 'created_at']),
+                sortedIndex(['code_hash', 'last_paid']),
+                sortedIndex(['src', 'dst', 'value', 'created_at']),
+                sortedIndex(['status', 'src', 'created_at', 'bounced', 'value']),
+                sortedIndex(['dst', 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['src', 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['src', 'dst', 'value', 'created_at', 'created_lt']),
+                sortedIndex(['src',  'value' , 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['dst',  'value' , 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['src', 'dst', 'created_at', 'created_lt']),
+                sortedIndex(['src', 'body_hash', 'created_at', 'created_lt']),
             ],
         },
         transactions: {
@@ -44,11 +61,19 @@ const BLOCKCHAIN = {
                 sortedIndex(['lt']),
                 sortedIndex(['account_addr', 'orig_status', 'end_status']),
                 sortedIndex(['now', 'account_addr', 'lt']),
+                sortedIndex(['workchain_id', 'now']),
+                sortedIndex(['block_id', 'tr_type', 'outmsg_cnt', 'now', 'lt']),
+                sortedIndex(['tr_type', 'now', 'lt']),
+                sortedIndex(['account_addr', 'orig_status', 'end_status', 'action.spec_action']),
+                sortedIndex(['account_addr', 'balance_delta', 'now', 'lt']),
+                sortedIndex(['account_addr', 'lt', 'now']),
+                sortedIndex(['block_id', 'lt']),
             ],
         },
         blocks_signatures: {
             indexes: [
                 sortedIndex(['signatures[*].node_id', 'gen_utime']),
+                sortedIndex(['gen_utime']),
             ],
         },
     }
@@ -76,22 +101,23 @@ function checkCollection(name, props) {
 
 }
 
-function checkDB(schema) {
+function checkDB(db_name, collections_schema) {
     db._useDatabase('_system');
-    if (db._databases().find(x => x.toLowerCase() === schema.name)) {
-        console.log(`Database ${schema.name} already exist.`);
+    if (db._databases().find(x => x.toLowerCase() === db_name)) {
+        console.log(`Database ${db_name} already exist.`);
     } else {
-        console.log(`Database ${schema.name} does not exist. Created.`);
-        db._createDatabase(schema.name, {}, []);
+        console.log(`Database ${db_name} does not exist. Created.`);
+        db._createDatabase(db_name, {}, []);
     }
-    db._useDatabase(schema.name);
-    Object.entries(schema.collections).forEach(([name, collection]) => {
+    db._useDatabase(db_name);
+    Object.entries(collections_schema).forEach(([name, collection]) => {
         checkCollection(name, collection);
     });
 }
 
+
 if (process.env.DB_TYPE === "Auth") {
-    checkDB(AUTH_SERVICE);
+    checkDB(process.env.DB_NAME || AUTH_SERVICE.name, AUTH_SERVICE.collections);
 } else {
-    checkDB(BLOCKCHAIN);
+    checkDB(process.env.DB_NAME || BLOCKCHAIN.name, BLOCKCHAIN.collections);
 }
