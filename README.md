@@ -1,6 +1,17 @@
 # README
 
 This HOWTO contains instructions on how to build and configure a TON OS DApp Server in TON blockchain. The instructions and scripts below were verified on Ubuntu 20.04.
+
+# Introduction
+
+TON OS DApp Server is a set of services enabling you to work with TON blockchain.
+
+The core element of TON OS DApp Server is [TON node written in Rust](https://github.com/tonlabs/ton-labs-node) focused on performance and safety. TON OS DApp Server provides a set of services serving TON SDK endpoint: scalable multi-model database [ArangoDB](https://www.arangodb.com/documentation/) with the information about all blockchain entities (like accounts, blocks, transactions, etc.) stored over time, distributed high-throughput, low-latency streaming platform [Kafka](https://kafka.apache.org/documentation/), [TON GraphQL Server](https://github.com/tonlabs/ton-q-server) (aka Q-Server) for serving GraphQL queries to the database and [Nginx](https://nginx.org/en/docs/) web-server.
+
+All the TON OS DApp Server services can be easily deployed with Docker/Docker Compose wrapped into unix shell scripts, provided below.
+
+> **Note**: Node is included in the DApp Server, and doesn't have to be installed separately.
+
 # Getting Started
 
 ## 1. System Requirements
