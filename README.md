@@ -57,8 +57,8 @@ Ubuntu 20.04:
     sudo usermod -a -G docker $USER
 
 
-### 2.3 Deploy Node
-Deploy node:
+### 2.3 Deploy Full Node
+Deploy full node:
 
     $ ./deploy.sh 2>&1 | tee ./deploy.log
 
