@@ -1,5 +1,8 @@
 FROM ubuntu:18.04 as build
 
+ARG TON_NODE_FEATURES=external_db,metrics
+RUN echo "INFO: TON_NODE_FEATURES = ${TON_NODE_FEATURES}"
+
 COPY ton-node /tonlabs/ton-node/
 
 # install deps
@@ -33,7 +36,7 @@ COPY rust_install.sh /tmp/rust_install.sh
 RUN bash -c "/tmp/rust_install.sh 1.49.0"
 
 WORKDIR /tonlabs/ton-node
-RUN cargo update && cargo build --release --features "external_db,metrics"
+RUN cargo update && cargo build --release --features "${TON_NODE_FEATURES}"
 
 FROM ubuntu:18.04 as build2
 

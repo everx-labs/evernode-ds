@@ -105,6 +105,7 @@ cd "${DOCKER_COMPOSE_DIR}/statsd/" && docker-compose up -d
 
 sed -i "s|ADNL_PORT.*|ADNL_PORT=${ADNL_PORT}|" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
 sed -i "s|NETWORK_TYPE.*|NETWORK_TYPE=${NETWORK_TYPE}|" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
+sed -i "s|TON_NODE_FEATURES.*|TON_NODE_FEATURES=\"${TON_NODE_FEATURES}\"|g" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
 
 rm -rf "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-node"
 cd "${DOCKER_COMPOSE_DIR}/ton-node/build" && git clone --recursive "${TON_NODE_GITHUB_REPO}" ton-node

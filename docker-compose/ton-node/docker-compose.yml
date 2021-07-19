@@ -3,6 +3,8 @@ services:
   node:
     build:
       context: ./build
+      args:
+        TON_NODE_FEATURES: ${TON_NODE_FEATURES}
     # image: "${NODE_IMAGE}"
     container_name: rnode
     restart: unless-stopped
