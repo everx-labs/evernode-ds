@@ -8,15 +8,14 @@ echo "INFO: \$1 = $1"
 
 case "${NETWORK_TYPE}" in
 "net.ton.dev" | "main.ton.dev")
-    TON_GLOBAL_CONFIG_BRANCH="master"
+    curl -sS "https://raw.githubusercontent.com/tonlabs/${NETWORK_TYPE}/master/configs/${NETWORK_TYPE}/ton-global.config.json" \
+        -o "${CONFIGS_PATH}/ton-global.config.json"
     ;;
 "rustnet.ton.dev")
-    TON_GLOBAL_CONFIG_BRANCH="main"
+    curl -sS "https://raw.githubusercontent.com/tonlabs/${NETWORK_TYPE}/main/configs/ton-global.config.json" \
+        -o "${CONFIGS_PATH}/ton-global.config.json"
     ;;
 esac
-
-curl -sS "https://raw.githubusercontent.com/tonlabs/${NETWORK_TYPE}/${TON_GLOBAL_CONFIG_BRANCH}/configs/${NETWORK_TYPE}/ton-global.config.json" \
-    -o "${CONFIGS_PATH}/ton-global.config.json"
 
 if [ "$1" = "bash" ]; then
     tail -f /dev/null
