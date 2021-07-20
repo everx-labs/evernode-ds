@@ -12,7 +12,7 @@ SRC_TOP_DIR=$(cd "${SCRIPT_DIR}/../" && pwd -P)
 export SRC_TOP_DIR
 export DOCKER_COMPOSE_DIR="${SRC_TOP_DIR}/docker-compose"
 
-# Supported network types: net.ton.dev, main.ton.dev
+# Supported network types: net.ton.dev, main.ton.dev, rustnet.ton.dev
 export NETWORK_TYPE="${NETWORK_TYPE:-net.ton.dev}"
 export CLEAN_HOST=${CLEAN_HOST:-yes}
 export ADNL_PORT=${ADNL_PORT:-30303}
