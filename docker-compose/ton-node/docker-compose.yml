@@ -3,7 +3,7 @@ services:
   node:
     build:
       context: ./build
-    # image: "${NODE_IMAGE}"
+    image: "${NODE_IMAGE}"
     container_name: rnode
     restart: unless-stopped
     environment:
@@ -16,6 +16,7 @@ services:
       STAKE:
       MSIG_ENABLE:
       SDK_URL:
+      NODE_IMAGE:
     ports:
       - "${ADNL_PORT}:${ADNL_PORT}/udp"
     networks:

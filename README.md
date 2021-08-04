@@ -56,9 +56,21 @@ Ubuntu 20.04:
 
     sudo usermod -a -G docker $USER
 
-
 ### 2.3 Deploy Full Node
-Deploy full node:
+#### Build node docker image
+Edit `NODE_IMAGE` parameter in `docker-compose/node/.env` - specify the name for node docker image. Docker image with this name will be built then and will be used for the network deployment.
+
+```
+cd docker-compose/ton-node/build/
+git clone --recursive https://github.com/tonlabs/ton-labs-node ton-node
+cd docker-compose/ton-node/
+docker-compose build --no-cache
+```
+
+Make sure just built node docker image is available on the host where the DApp Server will be deployed.
+
+
+#### Deploy full node:
 
     $ ./deploy.sh 2>&1 | tee ./deploy.log
 
