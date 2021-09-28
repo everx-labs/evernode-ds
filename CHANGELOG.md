@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Improvements
 
-- Fixed ton-node dependency to <...>
+- Fixed ton-labs-node dependency to <...>
 - Not-indexed arangodb was removed, now all queries, fast and slow are executed on the same arangodb.
   
 ### Fixed
