@@ -31,21 +31,37 @@ root:
     - logfile
 
 loggers:
-  # node messages
-  node:
-    level: debug
-    appenders:
-      - logfile
 
   ton_node:
-    level: trace
+    level: info
+    additive: false
+    appenders:
+      - logfile
+  boot:
+    level: info
+    additive: false
+    appenders:
+      - logfile
+  sync:
+    level: info
     additive: false
     appenders:
       - logfile
 
   # adnl messages
   adnl:
-    level: debug
+    level: error
+    additive: false
+    appenders:
+      - logfile
+  dht:
+    level: error
+    additive: false
+    appenders:
+      - logfile
+  overlay:
+    level: error
+    additive: false
     appenders:
       - logfile
 
@@ -75,4 +91,7 @@ loggers:
   validator:
     level: debug
     appenders:
-      - stdout_ref        
+      - stdout_ref
+
+  telemetry:
+    level: debug
