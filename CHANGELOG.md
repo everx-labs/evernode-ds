@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Improvements
 
-- ton-labs-node dependency is fixed to `f9e9a99ab989a4e88017630931c7475f14e9d46c`
+- ton-labs-node dependency is fixed to `f4a59efa0478e29305b207cfa2689df4a809ccf5`
 - Not-indexed arangodb was removed, now all queries, fast and slow are executed on the same arangodb.
 - Increased memlimit for Rust Node
 - Changed default Rust Node log config
