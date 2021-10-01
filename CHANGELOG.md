@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Not-indexed arangodb was removed, now all queries, fast and slow are executed on the same arangodb.
 - Increased memlimit for Rust Node
 - Changed default Rust Node log config
+- Updated cp-kafka-connect to 5.3.6
   
 ### Fixed
 
