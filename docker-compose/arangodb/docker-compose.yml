@@ -23,28 +23,6 @@ services:
       - "8529"
     mem_limit: 32G
 
-  arangodbni:
-    build:
-      context: ./build
-    # image: tonlabs/arango:latest
-    container_name: arangodbni
-    restart: unless-stopped
-    environment:
-      ARANGO_NO_AUTH: 1
-      VIRTUAL_HOST: arangoni.yourdomain.com
-      VIRTUAL_PORT: 8529
-      LETSENCRYPT_HOST: arangoni.yourdomain.com
-      LETSENCRYPT_EMAIL: "email for notification"
-    networks:
-      - proxy_nw
-    volumes:
-      - db3ni:/var/lib/arangodb3
-      - datani:/arango/db
-      - ./arangoni-config:/arango/config
-    expose:
-      - "8529"
-    mem_limit: 32G
-
 networks:
   proxy_nw:
     external: true

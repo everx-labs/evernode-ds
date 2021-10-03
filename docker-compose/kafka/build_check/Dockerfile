@@ -1,4 +1,4 @@
-FROM confluentinc/cp-kafka-connect:5.3.1
+FROM confluentinc/cp-kafka-connect:5.3.6
 RUN apt update && apt -y --force-yes install jq bsdmainutils
 COPY check.sh /work/check.sh
 COPY create_topics.sh /work/create_topics.sh
