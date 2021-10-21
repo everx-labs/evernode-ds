@@ -28,7 +28,8 @@ RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal main restrict
     automake \
     clang \
     git \
-    libzstd-dev
+    libzstd-dev \
+    libgoogle-perftools-dev
 
 ENV ZSTD_LIB_DIR=/usr/lib/x86_64-linux-gnu
 
@@ -76,7 +77,8 @@ RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal main restrict
     python3 \
     python3-pip \
     wget \
-    libzstd-dev
+    libzstd-dev \
+    libgoogle-perftools-dev
 
 ENV ZSTD_LIB_DIR=/usr/lib/x86_64-linux-gnu
 
