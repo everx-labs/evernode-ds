@@ -2,17 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] – 2021-10-21
+
+### Improvements
+
+- ton-labs-node dependency is fixed to `9fd95b11b36e0af673002911fd843009cf1a3629`
+  
+### Fixed
+
+- ton-labs-node: OOM condition fix
+- ton-labs-node: fix for node sync failure after reboot
+
 ## [0.1.1] – 2021-10-20
 
 ### Improvements
 
 - ton-labs-node dependency is fixed to `8acc92c2b2efb47f7f703b1c4a6722bfca648751`
 - ton-labs-node: updated RUST to 1.55
-  
-### Fixed
 
-- ton-labs-node: OOM condition fix
-- ton-labs-node: fix for node sync failure after reboot
 
 ## [0.1.0] – 2021-09-27
 
