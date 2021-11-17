@@ -94,7 +94,7 @@ done
 
 until [ "$(echo "${IntIP}" | grep "\." -o | wc -l)" -eq 3 ]; do
     set +e
-    IntIP="$(curl -sS ipv4bot.whatismyipaddress.com)":${ADNL_PORT}
+    IntIP="$(curl -sS https://ip.me/)":${ADNL_PORT}
     set -e
     echo "INFO: IntIP = $IntIP"
 done
