@@ -9,7 +9,7 @@ COPY ton-node /tonlabs/ton-node/
 # install deps
 ENV TZ=Europe/Moscow
 ENV PATH="/root/.cargo/bin:${PATH}"
-ENV RUST_BACKTRACE=1
+#ENV RUST_BACKTRACE=1
 
 RUN apt-get update && apt-get install -y curl gnupg2 && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 

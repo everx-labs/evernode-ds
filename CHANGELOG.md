@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] – 2021-11-19
+
+### Improvements
+
+- ton-labs-node dependency is fixed to `8b0fd1cd8dbcbbd55b278ed04842aa551f61e690`
+- ton-labs-node: implemented a mechanism with fixed dependencies
+- changed service to detect external IP
+- ton-labs-node: disabled RUST_BACKTRACE to improve performance
+
 ## [0.1.2] – 2021-10-21
 
 ### Improvements
