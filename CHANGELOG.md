@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] – 2022-01-14
+
+### Improvements
+
+- ton-labs-node dependency is fixed to `3037a6cf279aac5826035c66d8b822fbdecf3e1a`
+- updated ArangoDB to 3.7.15
+- tuned ArangoDB memory limits
+
 ## [0.1.3] – 2021-11-19
 
 ### Improvements
