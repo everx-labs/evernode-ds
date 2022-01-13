@@ -12,7 +12,7 @@ services:
       VIRTUAL_PORT: 8529
       LETSENCRYPT_HOST: arango.yourdomain.com
       LETSENCRYPT_EMAIL: "email for notification"
-      ARANGODB_OVERRIDE_DETECTED_TOTAL_MEMORY: 343579738368
+      ARANGODB_OVERRIDE_DETECTED_TOTAL_MEMORY: "${ARANGO_MEMORY}"
     networks:
       - proxy_nw
     volumes:
@@ -21,7 +21,7 @@ services:
       - ./arango-config:/arango/config
     expose:
       - "8529"
-    mem_limit: 32G
+    mem_limit: "${ARANGO_MEMORY}"
 
 networks:
   proxy_nw:
@@ -29,5 +29,3 @@ networks:
 volumes:
   data:
   db3:
-  datani:
-  db3ni:
