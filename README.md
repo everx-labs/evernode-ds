@@ -30,9 +30,9 @@ All the Evernode CE services can be easily deployed with Docker/Docker Compose w
 ## 1. System Requirements
 | Configuration | CPU (cores) | RAM (GiB) | Storage (GiB) | Network (Gbit/s)|
 |---|:---|:---|:---|:---|
-| Recommended |24|192|2000|1| 
+| Recommended |24|128|2000|1| 
 
-SSD disks are recommended for the storage.
+DApp Server is storage I/O bound, so NVMe SSD disks are recommended for the storage.
 
 **Note**: To connect to a DApp Server you are running with client applications (such as [TONOS-CLI](https://github.com/tonlabs/tonos-cli#21-set-the-network-and-parameter-values)), it should have a domain name and a DNS record. Then its URL may be used to access it.
 
