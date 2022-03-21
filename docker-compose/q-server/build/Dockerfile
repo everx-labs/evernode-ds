@@ -41,6 +41,6 @@ RUN rustup component add rustfmt-preview && rustup target add i686-unknown-linux
 WORKDIR /home/node
 USER node
 COPY ton-q-server /home/node/
-RUN npm install --production
+RUN npm ci && npm run tsc && npm ci --production
 EXPOSE 4000
 ENTRYPOINT ["node", "index.js"]
