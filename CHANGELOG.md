@@ -7,7 +7,10 @@ All notable changes to this project will be documented in this file.
 ### Improvements
 
 - ton-labs-node dependency is fixed to `3020fa75d73de06433fb162e64dcc830acdf9d6e`
-- updated Q-Server to `0.48.1`
+- updated Q-Server to [`0.48.1`](https://github.com/tonlabs/ton-q-server/blob/master/CHANGELOG.md#0481---2022-03-16)
+
+**Attention! Devnet is going through an update that will lead to a breaking change in account format which may cause your nodes to stop working.
+To fix it update your DApp Server to 0.1.5 version.**
 
 
 ## [0.1.4] – 2022-01-14
