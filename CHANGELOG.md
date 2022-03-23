@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.5] – 2022-03-23
+
+### Improvements
+
+- ton-labs-node dependency is fixed to `3020fa75d73de06433fb162e64dcc830acdf9d6e`
+- updated Q-Server to `0.48.1`
+
+
 ## [0.1.4] – 2022-01-14
 
 ### Improvements
