@@ -24,8 +24,7 @@
             "message_timeout_ms": 100,
             "topic": "blocks",
             "attempt_timeout_ms": 100,
-            "message_max_size": 1000000,
-            "big_messages_storage": "big-blocks"
+            "message_max_size": 1000000
         },
         "message_producer": {
             "enabled": true,
@@ -33,8 +32,7 @@
             "message_timeout_ms": 100,
             "topic": "messages",
             "attempt_timeout_ms": 100,
-            "message_max_size": 1000000,
-            "big_messages_storage": "big-messages"
+            "message_max_size": 1000000
         },
         "transaction_producer": {
             "enabled": true,
@@ -42,8 +40,7 @@
             "message_timeout_ms": 100,
             "topic": "transactions",
             "attempt_timeout_ms": 100,
-            "message_max_size": 1000000,
-            "big_messages_storage": "big-transactions"
+            "message_max_size": 1000000
         },
         "account_producer": {
             "enabled": true,
@@ -51,8 +48,7 @@
             "message_timeout_ms": 100,
             "topic": "accounts",
             "attempt_timeout_ms": 100,
-            "message_max_size": 4000000,
-            "big_messages_storage": "big-accounts"
+            "message_max_size": 4000000
         },
         "block_proof_producer": {
             "enabled": true,
@@ -60,8 +56,7 @@
             "message_timeout_ms": 100,
             "topic": "blocks_signatures",
             "attempt_timeout_ms": 100,
-            "message_max_size": 2000000,
-            "big_messages_storage": "big-block-proofs"
+            "message_max_size": 2000000
         },
         "bad_blocks_storage": "bad-blocks"
     }

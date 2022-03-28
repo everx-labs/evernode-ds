@@ -22,4 +22,4 @@ HOSTNAME=$(hostname -f)
 export TON_Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 export TON_Q_SERVER_GITHUB_COMMIT_ID="0.48.1"
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node"
-export TON_NODE_GITHUB_COMMIT_ID="3020fa75d73de06433fb162e64dcc830acdf9d6e"
+export TON_NODE_GITHUB_COMMIT_ID="49a724639a175752f44bcda65d907f2ca3ad97aa"
