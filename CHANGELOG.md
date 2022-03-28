@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.6] – 2022-03-29
+
+### Improvements
+
+- ton-labs-node dependency is fixed to `49a724639a175752f44bcda65d907f2ca3ad97aa`
+- Disabled big_messages_storage
+
 ## [0.1.5] – 2022-03-23
 
 ### Improvements
