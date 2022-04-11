@@ -11,13 +11,17 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.5] – 2022-03-23
 
-### Improvements
+### New
+- Support of new Account format for new TVM instruction INITCODEHASH
+- Account.init_code_hash field added to API
 
+
+### Improvements
 - ton-labs-node dependency is fixed to `3020fa75d73de06433fb162e64dcc830acdf9d6e`
 - updated Q-Server to [`0.48.1`](https://github.com/tonlabs/ton-q-server/blob/master/CHANGELOG.md#0481---2022-03-16)
 
-**Attention! Devnet is going through an update that will lead to a breaking change in account format which may cause your nodes to stop working.
-To fix it update your DApp Server to 0.1.5 version.**
+**Attention! Devnet and Mainnet are going through an update that will lead to a breaking change in account format which may cause your nodes to stop working.
+To fix it update your DApp Server to >=0.1.5 version.**
 
 
 ## [0.1.4] – 2022-01-14
