@@ -18,6 +18,10 @@ const BLOCKCHAIN = {
                 sortedIndex(['master.min_shard_gen_utime']),
                 sortedIndex(['prev_ref.root_hash', '_key']),
                 sortedIndex(['prev_alt_ref.root_hash', '_key']),
+                sortedIndex(['chain_order']),
+                sortedIndex(['key_block', 'chain_order']),
+                sortedIndex(['workchain_id', 'chain_order']),
+                sortedIndex(['workchain_id', 'shard', 'chain_order']),
             ],
         },
         accounts: {
@@ -37,6 +41,7 @@ const BLOCKCHAIN = {
                 sortedIndex(['src', 'created_at']),
                 sortedIndex(['dst', 'created_at']),
                 sortedIndex(['created_lt']),
+                sortedIndex(['msg_type', 'created_at']),
                 sortedIndex(['created_at']),
                 sortedIndex(['code_hash', 'created_at']),
                 sortedIndex(['code_hash', 'last_paid']),
@@ -45,10 +50,21 @@ const BLOCKCHAIN = {
                 sortedIndex(['dst', 'msg_type', 'created_at', 'created_lt']),
                 sortedIndex(['src', 'msg_type', 'created_at', 'created_lt']),
                 sortedIndex(['src', 'dst', 'value', 'created_at', 'created_lt']),
-                sortedIndex(['src',  'value' , 'msg_type', 'created_at', 'created_lt']),
-                sortedIndex(['dst',  'value' , 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['src', 'value', 'msg_type', 'created_at', 'created_lt']),
+                sortedIndex(['dst', 'value', 'msg_type', 'created_at', 'created_lt']),
                 sortedIndex(['src', 'dst', 'created_at', 'created_lt']),
                 sortedIndex(['src', 'body_hash', 'created_at', 'created_lt']),
+                sortedIndex(['chain_order']),
+                sortedIndex(['dst_chain_order']),
+                sortedIndex(['src_chain_order']),
+                sortedIndex(['msg_type', 'dst_chain_order']),
+                sortedIndex(['msg_type', 'src_chain_order']),
+                sortedIndex(['dst', 'dst_chain_order']),
+                sortedIndex(['dst', 'msg_type', 'dst_chain_order']),
+                sortedIndex(['dst', 'msg_type', 'src', 'dst_chain_order']),
+                sortedIndex(['src', 'src_chain_order']),
+                sortedIndex(['src', 'msg_type', 'src_chain_order']),
+                sortedIndex(['src', 'msg_type', 'dst', 'src_chain_order']),
             ],
         },
         transactions: {
@@ -68,6 +84,10 @@ const BLOCKCHAIN = {
                 sortedIndex(['account_addr', 'balance_delta', 'now', 'lt']),
                 sortedIndex(['account_addr', 'lt', 'now']),
                 sortedIndex(['block_id', 'lt']),
+                sortedIndex(['chain_order']),
+                sortedIndex(['account_addr', 'chain_order']),
+                sortedIndex(['workchain_id', 'chain_order']),
+                sortedIndex(['account_addr', 'aborted', 'chain_order']),
             ],
         },
         blocks_signatures: {
@@ -92,7 +112,7 @@ function checkCollection(name, props) {
         console.log(`Collection ${name} does not exist. Created.`);
         collection = db._create(name);
     } else {
-        console.log(`Collection ${name} already exist.`);
+        console.log(`Collection ${name} already exists.`);
     }
     props.indexes.forEach((index) => {
         console.log(`Ensure index ${index.fields.join(', ')}`);
@@ -104,7 +124,7 @@ function checkCollection(name, props) {
 function checkDB(db_name, collections_schema) {
     db._useDatabase('_system');
     if (db._databases().find(x => x.toLowerCase() === db_name)) {
-        console.log(`Database ${db_name} already exist.`);
+        console.log(`Database ${db_name} already exists.`);
     } else {
         console.log(`Database ${db_name} does not exist. Created.`);
         db._createDatabase(db_name, {}, []);
