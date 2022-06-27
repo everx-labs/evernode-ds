@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.7] – xxxx-xx-xx
+## [0.1.7] – 2022-06-27
+
+### New
+
+- support `query { blockchain { .. } }` GraphQL API queries in Evernode DApp Server
 
 ### Improvements
 
