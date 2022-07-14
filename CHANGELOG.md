@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.8] – 2022-06-27
+
+### Improvements
+
+- updated ton-q-server from `0.52.0` to `0.52.1`
+- updated ton-labs-node from `5c3951a4de03833a49079d1c07ad5a05798df169` to `5438eaab4db17c0c78869debf3e936078d9d7150`
+
+### Fixed
+- fixed `master.shard_hashes.shard` in master blocks in one-shard scenario
+
 ## [0.1.7] – 2022-06-27
 
 ### New
@@ -15,7 +25,6 @@ All notable changes to this project will be documented in this file.
 - updated kafka-connect-arangodb to custom solution with additional `overwritemode` parameter
 - changed arangodb-messages-sink configuration to update messages instead of replacing
 - added 20 new indexes to arangodb
-- make `query { blockchain { .. } }` GraphQL API queries properly work
 
 ## [0.1.6] – 2022-03-29
 
