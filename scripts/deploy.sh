@@ -127,6 +127,22 @@ cd "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-node" && git checkout "${TON_NODE_G
 
 echo "==============================================================================="
 echo "INFO: starting node on ${HOSTNAME}..."
+
+cd "${DOCKER_COMPOSE_DIR}/ton-node/configs"
+
+tmp=$(mktemp)
+jq --arg enabled $REMP_ENABLED '
+    .external_db_config.remp_statuses_producer = {
+            "enabled": $enabled | test("yes"),
+            "brokers": "kafka",
+            "message_timeout_ms": 1000,
+            "topic": "remp-receipts",
+            "attempt_timeout_ms": 100,
+            "message_max_size": 2000000
+    } |
+    .remp = { "enabled": $enabled | test("yes") }
+' default_config.json  > "$tmp" && mv "$tmp" default_config.json
+
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
 echo "INFO: starting node on ${HOSTNAME}... DONE"
 echo "==============================================================================="
