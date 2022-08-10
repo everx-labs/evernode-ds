@@ -23,3 +23,7 @@ export TON_Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 export TON_Q_SERVER_GITHUB_COMMIT_ID="0.52.1"
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node"
 export TON_NODE_GITHUB_COMMIT_ID="5438eaab4db17c0c78869debf3e936078d9d7150"
+
+export REMP_ENABLED="yes"
+export REMP_SUBSCRIPTIONS_GITHUB_COMMIT_ID="main"
+export REMP_SUBSCRIPTIONS_GITHUB_REPO="https://github.com/tonlabs/dapp-remp-subscriptions"

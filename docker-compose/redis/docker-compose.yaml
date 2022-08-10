@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+  redis:
+    image: redis
+    volumes:
+      - ./redis.conf:/redis.conf
+    command: ['redis-server', '/redis.conf']
+    networks:
+      - proxy_nw
+
+networks:
+  proxy_nw:
+    external: true
