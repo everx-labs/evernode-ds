@@ -30,6 +30,7 @@ sed -i "s|email for notification|${EMAIL_FOR_NOTIFICATIONS}|g" "${DOCKER_COMPOSE
 sed -i "s|NETWORK_TYPE.*|NETWORK_TYPE=${NETWORK_TYPE}|g" "${DOCKER_COMPOSE_DIR}/arangodb/.env"
 
 sed -i "s|host.yourdomain.com|${HOSTNAME}|g" "${DOCKER_COMPOSE_DIR}/web.root/.env"
+sed -i "s|host.yourdomain.com|${HOSTNAME}|g" "${DOCKER_COMPOSE_DIR}/web.root/index.html"
 sed -i "s|for notification|${EMAIL_FOR_NOTIFICATIONS}|g" "${DOCKER_COMPOSE_DIR}/web.root/docker-compose.yml"
 
 rm -f "${DOCKER_COMPOSE_DIR}/proxy/htpasswd/arango.yourdomain.com"
