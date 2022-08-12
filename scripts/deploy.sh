@@ -140,7 +140,7 @@ jq --arg enabled $REMP_ENABLED '
             "attempt_timeout_ms": 100,
             "message_max_size": 2000000
     } |
-    .remp = { "enabled": $enabled | test("yes") }
+    .remp.RempClient = { "enabled": true }
 ' default_config.json  > "$tmp" && mv "$tmp" default_config.json
 
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
