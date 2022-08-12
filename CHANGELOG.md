@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.9] – 2022-08-12
+
+### Improvements
+
+- updated ton-labs-node from `5438eaab4db17c0c78869debf3e936078d9d7150` to `c5ee530c54199e81e2ca241a17ec23be7290229a`
+
 ## [0.1.8] – 2022-06-27
 
 ### Improvements
