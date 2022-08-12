@@ -94,9 +94,10 @@ done
 
 until [ "$(echo "${IntIP}" | grep "\." -o | wc -l)" -eq 3 ]; do
     set +e
-    IntIP="$(curl -sS https://ip.me/)":${ADNL_PORT}
+    IntIP="$(curl -sS4 https://ip.me/)":${ADNL_PORT}
     set -e
     echo "INFO: IntIP = $IntIP"
+    sleep 5s
 done
 sed -i "s|IntIP.*|IntIP=${IntIP}|g" "${DOCKER_COMPOSE_DIR}/statsd/.env"
 cd "${DOCKER_COMPOSE_DIR}/statsd/" && docker-compose up -d
