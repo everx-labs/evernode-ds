@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Improvements
 
-- Added REMP support. Set REMP_ENABLED=true in scripts/env.sh
+- Added REMP support. Set REMP_ENABLED="yes" in scripts/env.sh
 
 
 ## [0.1.9] – 2022-08-12

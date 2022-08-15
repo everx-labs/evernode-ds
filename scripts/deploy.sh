@@ -132,7 +132,7 @@ echo "INFO: starting node on ${HOSTNAME}..."
 cd "${DOCKER_COMPOSE_DIR}/ton-node/configs"
 
 tmp=$(mktemp)
-jq --arg enabled $REMP_ENABLED '
+jq --indent 4 --arg enabled $REMP_ENABLED '
     .external_db_config.remp_statuses_producer = {
             "enabled": $enabled | test("yes"),
             "brokers": "kafka",
