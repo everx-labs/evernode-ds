@@ -22,4 +22,8 @@ HOSTNAME=$(hostname -f)
 export TON_Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 export TON_Q_SERVER_GITHUB_COMMIT_ID="0.52.1"
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node"
-export TON_NODE_GITHUB_COMMIT_ID="c5ee530c54199e81e2ca241a17ec23be7290229a"
+export TON_NODE_GITHUB_COMMIT_ID="bebd143a9c84c907c9e37d9da5d924d1279598bf"
+
+export REMP_ENABLED="yes"
+export REMP_SUBSCRIPTIONS_GITHUB_COMMIT_ID="main"
+export REMP_SUBSCRIPTIONS_GITHUB_REPO="https://github.com/tonlabs/dapp-remp-subscriptions"

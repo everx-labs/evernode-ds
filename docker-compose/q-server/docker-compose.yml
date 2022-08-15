@@ -16,6 +16,8 @@ services:
       - Q_REQUESTS_TOPIC
       - Q_QUERY_MAX_RUNTIME
       - Q_SLOW_QUERIES
+      - Q_REMP_ENABLED
+      - Q_REMP_REDIS_CLIENT_URL
     networks:
       - proxy_nw
     expose:

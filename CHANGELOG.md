@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] – 2022-08-15
+
+### Improvements
+
+- Added REMP support. Set REMP_ENABLED=true in scripts/env.sh
+
+
 ## [0.1.9] – 2022-08-12
 
 ### Improvements

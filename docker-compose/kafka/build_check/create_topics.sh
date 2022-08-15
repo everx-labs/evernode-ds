@@ -12,6 +12,8 @@ kafka-topics --create --zookeeper zookeeper:2181 --topic requests  --replication
 sleep 2
 kafka-topics --create --zookeeper zookeeper:2181 --topic blocks_signatures  --replication-factor 1 --partitions 5 --if-not-exists
 sleep 2
+kafka-topics --create --zookeeper zookeeper:2181 --topic remp-receipts --replication-factor 1 --partitions 5 --if-not-exists
+sleep 2
 kafka-topics --alter --zookeeper zookeeper:2181 --topic accounts --partitions 20 --if-exists
 sleep 2
 kafka-topics --alter --zookeeper zookeeper:2181 --topic transactions --partitions 40 --if-exists
@@ -23,3 +25,5 @@ sleep 2
 kafka-topics --alter --zookeeper zookeeper:2181 --topic requests --partitions 30 --if-exists
 sleep 2
 kafka-topics --alter --zookeeper zookeeper:2181 --topic blocks_signatures --partitions 5 --if-exists
+sleep 2
+kafka-topics --alter --zookeeper zookeeper:2181 --topic remp-receipts --partitions 5 --if-exists
