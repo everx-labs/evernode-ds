@@ -3,8 +3,6 @@
 This HOWTO contains instructions on how to build and configure your own free instance of Evernode Platform to connect your application to Everscale. The instructions and scripts below were verified on Ubuntu 20.04.
 
 # Table of Contents
-- [Evernode DApp Server (DS)](#evernode-dapp-server-ds)
-- [Table of Contents](#table-of-contents)
 - [What is Evernode Dapp Server?](#what-is-evernode-dapp-server)
 - [Getting Started](#getting-started)
   - [1. System Requirements](#1-system-requirements)
@@ -24,6 +22,12 @@ The core element of Evernode DS is [Everscale node written in Rust](https://gith
 All the Evernode DS services can be easily deployed with Docker/Docker Compose wrapped into unix shell scripts, provided below.
 
 > **Note**: Rust node is included in the Evernode DS, and doesn't have to be installed separately.
+
+# Techical architecture overview
+
+The system components run as docker images and are shown in the diagram below.
+
+![System components](./system_components.svg)
 
 # Getting Started
 
