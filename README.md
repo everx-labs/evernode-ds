@@ -47,7 +47,6 @@ DApp Server is storage I/O bound, so NVMe SSD disks are recommended for the stor
 Adjust (if needed) `evernode-ds/scripts/env.sh`:
 - specify the network - use main.ton.dev for the main network and net.ton.dev for the developer network
 - specify notification email
-- specify if REMP is supported, set REMP_ENABLED="yes" or "no"
 
 Set environment variables:
 
