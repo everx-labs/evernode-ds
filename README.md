@@ -27,7 +27,7 @@ All the Evernode DS services can be easily deployed with Docker/Docker Compose w
 
 The system components run as docker images and are shown in the diagram below.
 
-![System components](./system_components.svg)
+![System components](./docs/system_components.svg)
 
 # Getting Started
 
