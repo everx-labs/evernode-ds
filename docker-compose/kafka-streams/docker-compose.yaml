@@ -14,11 +14,12 @@ services:
         networks:
             - proxy_nw
 
-        deploy:
-            resources:
-                limits: # limits are random - just to have this service limited
-                    cpus: 10
-                    memory: 10G
+# TODO need to revisit
+#        deploy:
+#            resources:
+#                limits: # limits are random - just to have this service limited
+#                    cpus: 10
+#                    memory: 10G
 
 networks:
     proxy_nw:
