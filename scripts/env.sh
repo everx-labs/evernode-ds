@@ -20,9 +20,9 @@ export EMAIL_FOR_NOTIFICATIONS="email@yourdomain.com"
 export COMPOSE_HTTP_TIMEOUT=120 # in sec, 60 sec - default
 HOSTNAME=$(hostname -f)
 export TON_Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
-export TON_Q_SERVER_GITHUB_COMMIT_ID="0.52.1"
+export TON_Q_SERVER_GITHUB_COMMIT_ID="0.54.0"
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node"
-export TON_NODE_GITHUB_COMMIT_ID="58d0b3495c4e49151fc39b440777264e1e1c85f7"
+export TON_NODE_GITHUB_COMMIT_ID="remp-dev"
 
 export REMP_ENABLED="yes"
 export REMP_SUBSCRIPTIONS_GITHUB_COMMIT_ID="main"
