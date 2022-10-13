@@ -40,7 +40,7 @@ echo "#iJJ9fWxb9Z6CS1aPagoW" >>"${DOCKER_COMPOSE_DIR}/proxy/htpasswd/arango.${HO
 mv "${DOCKER_COMPOSE_DIR}/proxy/vhost.d/host.yourdomain.com" "${DOCKER_COMPOSE_DIR}/proxy/vhost.d/${HOSTNAME}"
 
 for BUNDLE_COMPONENT in proxy web.root arangodb redis; do
-    cd "${DOCKER_COMPOSE_DIR}/${BUNDLE_COMPONENT}/" && docker-compose up -d
+    cd "${DOCKER_COMPOSE_DIR}/${BUNDLE_COMPONENT}/" && docker-compose --compatibility up -d
 done
 
 rm -rf "${DOCKER_COMPOSE_DIR}/q-server/build/ton-q-server"
@@ -54,13 +54,13 @@ if [ "${REMP_ENABLED}" = "yes" ]; then
 else
     echo "Q_REMP_ENABLED=false" >> ${ENVFILE}
 fi
-cd "${DOCKER_COMPOSE_DIR}/q-server" && docker-compose up -d
+cd "${DOCKER_COMPOSE_DIR}/q-server" && docker-compose --compatibility up -d
 
 echo "INFO: Waiting for Kafka start..."
 cd "${DOCKER_COMPOSE_DIR}/kafka" || exit 1
 OK=0
 while [ $OK -ne 100 ]; do
-    docker-compose up -d >"${TMP_DIR}/kafka.log" 2>&1
+    docker-compose --compatibility up -d >"${TMP_DIR}/kafka.log" 2>&1
     OK=$(awk '
         BEGIN { fail = 0 }
         {
@@ -110,13 +110,13 @@ until [ "$(echo "${IntIP}" | grep "\." -o | wc -l)" -eq 3 ]; do
     sleep 5s
 done
 sed -i "s|IntIP.*|IntIP=${IntIP}|g" "${DOCKER_COMPOSE_DIR}/statsd/.env"
-cd "${DOCKER_COMPOSE_DIR}/statsd/" && docker-compose up -d
+cd "${DOCKER_COMPOSE_DIR}/statsd/" && docker-compose --compatibility up -d
 
 if [ "${REMP_ENABLED}" = "yes" ]; then
     rm -rf "${DOCKER_COMPOSE_DIR}/kafka-streams/dapp-remp-subscriptions"
     cd "${DOCKER_COMPOSE_DIR}/kafka-streams" && git clone --recursive "${REMP_SUBSCRIPTIONS_GITHUB_REPO}"
     cd "${DOCKER_COMPOSE_DIR}/kafka-streams/dapp-remp-subscriptions" && git checkout "${REMP_SUBSCRIPTIONS_GITHUB_COMMIT_ID}"
-    cd "${DOCKER_COMPOSE_DIR}/kafka-streams" && docker-compose up -d
+    cd "${DOCKER_COMPOSE_DIR}/kafka-streams" && docker-compose --compatibility up -d
 fi
 
 sed -i "s|ADNL_PORT.*|ADNL_PORT=${ADNL_PORT}|" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
@@ -144,7 +144,7 @@ jq --indent 4 --arg enabled $REMP_ENABLED '
     .remp.RempClient = { "enabled": true }
 ' default_config.json  > "$tmp" && mv "$tmp" default_config.json
 
-cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
+cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose --compatibility up -d
 echo "INFO: starting node on ${HOSTNAME}... DONE"
 echo "==============================================================================="
 
