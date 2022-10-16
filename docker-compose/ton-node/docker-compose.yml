@@ -22,10 +22,12 @@ services:
       - proxy_nw
     volumes:
       - ./configs/:/ton-node/configs/
+      - ./scripts/:/ton-node/scripts/
       - ./logs/:/ton-node/logs/
       - DB:/ton-node/node_db/
       - /tmp/metrics/:/tmp/metrics/
-    command: ["normal"]
+    entrypoint: /ton-node/scripts/entrypoint.sh
+    command: ["${NODE_CMD_1}"]
     mem_limit: "${MEM_LIMIT}"
     logging:
       driver: json-file
