@@ -118,7 +118,7 @@ cd "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-labs-node-tools" && git checkout "$
 echo "==============================================================================="
 echo "INFO: starting node on ${HOSTNAME}..."
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
-docker exec --tty node "/ton-node/scripts/generate_console_config.sh"
+docker exec --tty rnode "/ton-node/scripts/generate_console_config.sh"
 sed -i "s|NODE_CMD_1.*|NODE_CMD_1=normal|g" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose stop
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
