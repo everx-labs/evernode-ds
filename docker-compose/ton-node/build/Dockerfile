@@ -41,7 +41,8 @@ RUN curl https://packages.confluent.io/deb/5.5/archive.key | apt-key add;\
     apt-get install -y librdkafka-dev;
 
 # Get Rust
-RUN bash -c "/ton-node/scripts/rust_install.sh ${RUST_VERSION}"
+COPY rust_install.sh /tmp/rust_install.sh
+RUN bash -c "/tmp/rust_install.sh ${RUST_VERSION}"
 
 WORKDIR /tonlabs/ton-node
 RUN cargo update && cargo build --release --features "external_db,metrics"
@@ -84,7 +85,8 @@ RUN echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal main restrict
 ENV ZSTD_LIB_DIR=/usr/lib/x86_64-linux-gnu
 
 # Get Rust
-RUN bash -c "/ton-node/scripts/rust_install.sh ${RUST_VERSION}"
+COPY rust_install.sh /tmp/rust_install.sh
+RUN bash -c "/tmp/rust_install.sh ${RUST_VERSION}"
 
 COPY --from=build /tonlabs/ton-node/target/release/ton_node /ton-node/
 COPY --from=build /tonlabs/ton-labs-node-tools/target/release/console /ton-node/tools/
