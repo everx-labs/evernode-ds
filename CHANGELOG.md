@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] – 2022-08-12
+
+## New
+
+- Node console added
+- ton-q-server updated to 0.54.0 version (ext_in_msg_max_size increased to 64 kb)
+
+### Improvements
+
+- updated ton-labs-node from `5438eaab4db17c0c78869debf3e936078d9d7150` to `c5ee530c54199e81e2ca241a17ec23be7290229a`
+
 ## [0.1.9] – 2022-08-12
 
 ### Improvements
