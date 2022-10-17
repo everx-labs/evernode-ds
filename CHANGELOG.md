@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.0] – 2022-10-17
+## [0.2.0] – 2022-10-18
 
 ## New
 
@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Improvements
 
-- updated ton-labs-node from `c5ee530c54199e81e2ca241a17ec23be7290229a` to `commit_hash`
+- updated ton-labs-node from `c5ee530c54199e81e2ca241a17ec23be7290229a` to `befb1ba4d91733ee2c14fa3cf4ebe8047b279e92`
 
 ## [0.1.9] – 2022-08-12
 
