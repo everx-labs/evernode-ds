@@ -82,34 +82,31 @@ Deploy full node:
 
 Use the following command to check if the node is synced:
 
-    docker exec -it node /ton-node/tools/console -C /ton-node/configs/console.json --cmd getstats
+    docker exec rnode /ton-node/tools/console -C /ton-node/configs/console.json --cmd getstats
 
 Script output example:
 ```
-tonlabs console 0.1.254
-COMMIT_ID: 
-BUILD_DATE: 2021-12-24 10:53:20 +0300
-COMMIT_DATE: 
-GIT_BRANCH: 
+tonlabs console 0.1.286
+COMMIT_ID: 5efe6bb8f2a974ba0e6b1ea3e58233632236e182
+BUILD_DATE: 2022-10-17 02:32:44 +0300
+COMMIT_DATE: 2022-08-12 00:22:07 +0300
+GIT_BRANCH: master
 {
-    "sync_status":    "synchronization finished",
-    "masterchainblocktime":    1640343840,
-    "masterchainblocknumber":    13393489,
-    "timediff":    4,
-    "in_current_vset_p34":    true,
-    "in_next_vset_p36":    false,
-    "last_applied_masterchain_block_id":    {"shard":"-1:8000000000000000","seq_no":13393489,"rh":"e74d505222bbe64617bbd42939cf01334b035990ae4b4e285e67ecbb1b537dd3","fh":"fc0be7c22310389400a7bdbd000b3737b317ce44d92e9a5ed72086c4fa404afa"},
-    "processed_workchain":    0,
-    "validation_stats":    {
-  "-1:8000000000000000": "1 sec ago",
-  "0:e800000000000000": "1 sec ago"
-},
-    "collation_stats":    {
-  "-1:8000000000000000": "never",
-  "0:e800000000000000": "6 sec ago"
-},
-    "tps_10":    2,
-    "tps_300":    1
+	"sync_status":	"synchronization_finished",
+	"masterchainblocktime":	1665988670,
+	"masterchainblocknumber":	9194424,
+	"node_version":	"0.51.1",
+	"public_overlay_key_id":	"S4TaVdGitzTApe7GFCj8DbuRIkVEbg+ODzBxhQGIUG0=",
+	"timediff":	6,
+	"shards_timediff":	6,
+	"in_current_vset_p34":	false,
+	"in_next_vset_p36":	false,
+	"last_applied_masterchain_block_id":	{"shard":"-1:8000000000000000","seq_no":9194424,"rh":"ff88c27c9bc65762da222d6c14a163a96f7c74b65d1930735e23266a3b07ee8b","fh":"208bf95293feec1afdfdbd65a63c5f3ac4cd6a6fa15ac9e4e88fbfbd6a883edc"},
+	"processed_workchain":	"masterchain",
+	"validation_stats":	{},
+	"collation_stats":	{},
+	"tps_10":	2,
+	"tps_300":	2
 }
 ```
 If the `timediff` parameter is less than 10 seconds, synchronization with masterchain is complete.
