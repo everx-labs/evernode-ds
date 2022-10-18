@@ -105,13 +105,22 @@ cd "${DOCKER_COMPOSE_DIR}/statsd/" && docker-compose up -d
 
 sed -i "s|ADNL_PORT.*|ADNL_PORT=${ADNL_PORT}|" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
 sed -i "s|NETWORK_TYPE.*|NETWORK_TYPE=${NETWORK_TYPE}|" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
+sed -i "s|NODE_CMD_1=.*|NODE_CMD_1=bash|g" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
 
 rm -rf "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-node"
 cd "${DOCKER_COMPOSE_DIR}/ton-node/build" && git clone --recursive "${TON_NODE_GITHUB_REPO}" ton-node
 cd "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-node" && git checkout "${TON_NODE_GITHUB_COMMIT_ID}"
 
+rm -rf "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-labs-node-tools"
+cd "${DOCKER_COMPOSE_DIR}/ton-node/build" && git clone --recursive "${TON_NODE_TOOLS_GITHUB_REPO}"
+cd "${DOCKER_COMPOSE_DIR}/ton-node/build/ton-labs-node-tools" && git checkout "${TON_NODE_TOOLS_GITHUB_COMMIT_ID}"
+
 echo "==============================================================================="
 echo "INFO: starting node on ${HOSTNAME}..."
+cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
+docker exec --tty rnode "/ton-node/scripts/generate_console_config.sh"
+sed -i "s|NODE_CMD_1.*|NODE_CMD_1=normal|g" "${DOCKER_COMPOSE_DIR}/ton-node/.env"
+cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose stop
 cd "${DOCKER_COMPOSE_DIR}/ton-node/" && docker-compose up -d
 echo "INFO: starting node on ${HOSTNAME}... DONE"
 echo "==============================================================================="

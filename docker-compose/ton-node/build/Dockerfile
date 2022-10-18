@@ -5,6 +5,7 @@ FROM ubuntu:18.04 as build
 ARG RUST_VERSION
 
 COPY ton-node /tonlabs/ton-node/
+COPY ton-labs-node-tools /tonlabs/ton-labs-node-tools/
 
 # install deps
 ENV TZ=Europe/Moscow
@@ -41,12 +42,13 @@ RUN curl https://packages.confluent.io/deb/5.5/archive.key | apt-key add;\
 
 # Get Rust
 COPY rust_install.sh /tmp/rust_install.sh
-
 RUN bash -c "/tmp/rust_install.sh ${RUST_VERSION}"
 
 WORKDIR /tonlabs/ton-node
-#RUN cargo update && cargo build --release --features "external_db,metrics,compression"
 RUN cargo update && cargo build --release --features "external_db,metrics"
+
+WORKDIR /tonlabs/ton-labs-node-tools
+RUN cargo update && cargo build --release
 
 FROM ubuntu:18.04 as build2
 
@@ -87,6 +89,5 @@ COPY rust_install.sh /tmp/rust_install.sh
 RUN bash -c "/tmp/rust_install.sh ${RUST_VERSION}"
 
 COPY --from=build /tonlabs/ton-node/target/release/ton_node /ton-node/
-COPY entrypoint.sh /
-
-ENTRYPOINT ["/entrypoint.sh"]
+COPY --from=build /tonlabs/ton-labs-node-tools/target/release/console /ton-node/tools/
+COPY --from=build /tonlabs/ton-labs-node-tools/target/release/keygen /ton-node/tools/
