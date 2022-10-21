@@ -23,6 +23,8 @@ export TON_Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 export TON_Q_SERVER_GITHUB_COMMIT_ID="0.54.0"
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node"
 export TON_NODE_GITHUB_COMMIT_ID="remp-dev"
+export TON_NODE_TOOLS_GITHUB_REPO="https://github.com/tonlabs/ton-labs-node-tools.git"
+export TON_NODE_TOOLS_GITHUB_COMMIT_ID="master"
 
 export REMP_ENABLED="yes"
 export REMP_SUBSCRIPTIONS_GITHUB_COMMIT_ID="main"

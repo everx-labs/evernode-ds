@@ -2,12 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.0] – 2022-08-15
+## [0.2.1] – XXXX-XX-XX
 
 ### Improvements
 
 - Added REMP support. Set REMP_ENABLED="yes" in scripts/env.sh
 
+## [0.2.0] – 2022-10-18
+
+## New
+
+- Node console added
+- ton-q-server updated to 0.54.0 version (ext_in_msg_max_size increased to 64 kb)
+
+### Improvements
+
+- updated ton-labs-node from `c5ee530c54199e81e2ca241a17ec23be7290229a` to `befb1ba4d91733ee2c14fa3cf4ebe8047b279e92`
 
 ## [0.1.9] – 2022-08-12
 
