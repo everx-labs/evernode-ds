@@ -23,7 +23,7 @@ jq ".control_server_port = ${RNODE_CONSOLE_SERVER_PORT}" "${TON_NODE_CONFIGS_DIR
 cp "${TMP_DIR}/default_config.json.tmp" "${TON_NODE_CONFIGS_DIR}/default_config.json"
 
 # Generate initial config.json
-cd "${TON_NODE_ROOT_DIR}" && "${TON_NODE_ROOT_DIR}/ton_node" --configs "${TON_NODE_CONFIGS_DIR}" --ckey "$(cat "${TON_NODE_CONFIGS_DIR}/console_client_public.json")" &
+cd "${TON_NODE_ROOT_DIR}" && "${TON_NODE_ROOT_DIR}/ton_node_kafka" --configs "${TON_NODE_CONFIGS_DIR}" --ckey "$(cat "${TON_NODE_CONFIGS_DIR}/console_client_public.json")" &
 
 sleep 10
 

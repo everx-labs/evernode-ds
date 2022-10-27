@@ -13,7 +13,7 @@ if [ "$1" = "bash" ]; then
     tail -f /dev/null
 else
     cd /ton-node
-    exec /ton-node/ton_node --configs "${CONFIGS_PATH}"
+    exec /ton-node/ton_node_kafka --configs "${CONFIGS_PATH}"
 fi
 
 echo "INFO: R-Node startup... DONE"

@@ -1,11 +1,12 @@
 version: '2.2'
 services:
   node:
-    build:
-      context: ./build
-    # image: "${NODE_IMAGE}"
+    #build:
+    #  context: ./build
+    image: "${NODE_IMAGE}"
     container_name: rnode
     restart: unless-stopped
+    user: 0:0
     environment:
       ADNL_PORT:
       VALIDATOR_NAME:
