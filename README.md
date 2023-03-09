@@ -1,4 +1,8 @@
 # Evernode DApp Server (DS)
+[Evernode Dapp Server](https://docs.evercloud.dev/products/dapp-server-ds) is a community (open source) version of [Evernode Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh)  that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
+
+
+Compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-inpage-provider) and other libraries and tools for TVM blockchains. 
 
 This HOWTO contains instructions on how to build and configure your own free instance of Evernode Platform to connect your application to Everscale. The instructions and scripts below were verified on Ubuntu 20.04.
 
