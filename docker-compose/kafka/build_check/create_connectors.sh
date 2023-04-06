@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 for connector in $(ls /work/connectors)
 do
     connect-cli create -e http://connect:8083/  $(awk -F "." '{print $1}' <<< ${connector}) < /work/connectors/${connector}

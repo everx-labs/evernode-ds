@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -e -o pipefail
+
 # List current connectors and status
 curl -s "http://$1:8083/connectors"| jq '.[]'| sed  -e 's/"//g' | \
 xargs -I{connector_name} curl -s "http://$1:8083/connectors/{connector_name}/status"| \
