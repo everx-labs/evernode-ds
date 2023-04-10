@@ -1,12 +1,15 @@
 version: '2.3'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.3.1
+    image: confluentinc/cp-zookeeper:latest-ubi8.amd64
     container_name: zookeeper
     restart: unless-stopped
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=ruok"
+    expose:
+      - 2181
     networks:
       - proxy_nw
     healthcheck:
@@ -17,13 +20,13 @@ services:
       start_period: 40s
 
   kafka:
-    image: confluentinc/cp-kafka:5.3.1
+    image: confluentinc/cp-kafka:latest-ubi8.amd64
     container_name: kafka
     restart: unless-stopped
     depends_on:
       - zookeeper
-    expose:
-      - "9092"
+    ports:
+      - "9092:9092"
     networks:
       - proxy_nw
     environment:
@@ -33,6 +36,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: INFO
       KAFKA_JMX_PORT: 9581
       KAFKA_LOG_RETENTION_HOURS: 4
       KAFKA_LOG_ROLL_MS: 600000
@@ -45,8 +50,9 @@ services:
       KAFKA_REPLICA_FETCH_MAX_BYTES: 4000000
     volumes:
       - data:/var/lib/kafka/data
+
   connect:
-    image: confluentinc/cp-kafka-connect:5.3.1
+    image: confluentinc/cp-kafka-connect:latest-ubi8.amd64
     container_name: connect
     restart: unless-stopped
     depends_on:
@@ -54,7 +60,7 @@ services:
       - kafka
       - schema-registry
     environment:
-      CONNECT_BOOTSTRAP_SERVERS: 'kafka:29092'
+      CONNECT_BOOTSTRAP_SERVERS: kafka:29092
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: compose-connect-group
@@ -70,17 +76,19 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      # Assumes image is based on confluentinc/kafka-connect-datagen:latest which is pulling 5.1.1 Connect image
+      CONNECT_ZOOKEEPER_CONNECT: zookeeper:2181
       CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.2.1.jar
       CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+      CONNECT_LOG4J_ROOT_LOGGER: INFO
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
       KAFKA_JMX_PORT: 9584
       CONNECT_FETCH_MESSAGE_MAX_BYTES: 3001000
       CONNECT_MAX_REQUEST_SIZE: 3001000
       CONNECT_MAX_PARTITION_FETCH_BYTES: 3001000
+    expose:
+      - 8083
     networks:
       - proxy_nw
     volumes:
@@ -91,10 +99,9 @@ services:
       timeout: 5s
       retries: 3
       start_period: 60s
-    mem_limit: 30G
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.3.1
+    image: confluentinc/cp-schema-registry:latest-ubi8.amd64
     hostname: schema-registry
     container_name: schema-registry
     restart: unless-stopped
@@ -104,22 +111,19 @@ services:
     expose:
       - 8081
     environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:29092
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
       SCHEMA_REGISTRY_JMX_PORT: 9582
     networks:
       - proxy_nw
 
 
-    networks:
-      - proxy_nw
-    volumes:
-      - ./launch.sh:/etc/confluent/docker/launch
-
-  check-connect:
+  init-kafka:
     build:
       context: build_check
-    container_name: check-connect
+    container_name: init-kafka
     restart: unless-stopped
     depends_on:
       connect:

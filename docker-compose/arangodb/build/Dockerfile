@@ -1,4 +1,4 @@
-FROM arangodb:3.7.15
+FROM arangodb:3.10.5
 
 RUN apk add bash
 RUN rm /entrypoint.sh
