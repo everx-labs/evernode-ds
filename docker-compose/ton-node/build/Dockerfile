@@ -1,11 +1,11 @@
-ARG RUST_VERSION=1.61.0
+ARG RUST_VERSION=1.65.0
 
 FROM ubuntu:18.04 as build
 
 ARG RUST_VERSION
 
 COPY ton-node /tonlabs/ton-node/
-COPY ton-labs-node-tools /tonlabs/ton-labs-node-tools/
+COPY ever-node-tools /tonlabs/ton-labs-node-tools/
 
 # install deps
 ENV TZ=Europe/Moscow

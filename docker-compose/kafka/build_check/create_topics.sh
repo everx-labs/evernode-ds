@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 kafka-topics --create --zookeeper zookeeper:2181 --topic accounts  --replication-factor 1 --partitions 20 --if-not-exists
 sleep 2
 kafka-topics --create --zookeeper zookeeper:2181 --topic transactions  --replication-factor 1 --partitions 40 --if-not-exists
