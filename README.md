@@ -2,7 +2,7 @@
 
 [Evernode Dapp Server](https://docs.evercloud.dev/products/dapp-server-ds) is a community (open source) version of [Evernode Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
 
-It's compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-inpage-provider) and other libraries and tools for TVM blockchains.
+Evernode Dapp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-inpage-provider) and other libraries and tools for TVM blockchains.
 
 <p align="center">
   <a href="https://docs.everscale.network/">
@@ -13,23 +13,23 @@ It's compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](
   </a>
 </p>
 
-This HOWTO contains instructions on how to build and configure your own free instance of Evernode Platform to connect your application to TVM blockchains.
-The instructions and scripts below were verified on Ubuntu 20.04.
+This repository contains instructions on how to run your own free instance of Evernode Platform to connect your application to TVM blockchains.
+The instructions and scripts were verified on Ubuntu 20.04.
 
 ## Table of Contents
 
--   [1. What is Evernode Dapp Server?](#1-what-is-evernode-dapp-server)
+-   [1. What is Evernode DApp Server?](#1-what-is-evernode-dapp-server)
 -   [2. Overview of technical architecture](#2-overview-of-technical-architecture)
-    -   [2.1 Services interaction diagram](#21-services-interaction-diagram)
+    -   [2.1 Service interaction diagram](#21-service-interaction-diagram)
 -   [3. Getting Started](#3-getting-started)
     -   [3.1 Prerequisites](#31-prerequisites)
     -   [3.2 Configuration](#32-configuration)
     -   [3.3 Deployment](#33-deployment)
     -   [3.4 Tests](#34-tests)
 
-## 1. What is Evernode Dapp Server?
+## 1. What is Evernode DApp Server?
 
-Evernode DS is a set of services enabling you to work with Everscale blockchain.
+ Evernode DS is a set of services that allow your applications to interact with the TVM blockchains:
 
 -   [Everscale node](https://github.com/tonlabs/ton-labs-node), written in Rust and focused on performance and safety,
     is the core element of Evernode DS.
@@ -44,13 +44,13 @@ Evernode DS is a set of services enabling you to work with Everscale blockchain.
 
 -   [StatsD exporter](....) to collect and expose metrics to Prometheus.
 
-The client interacts with the blockchain by performing the appropriate GraphQL operations:
+The client/application interacts with the blockchain by performing the appropriate GraphQL operations:
 
--   GraphQL mutation - for sending a message to blockhain
--   GraphQL Query - for quering blockchain data
--   GraphQL Subscriptio - for subscribing to blockchain events
+-   Mutation - to send an external message to the blockchain.
+-   Query - to query blockchain data.
+-   Subscription - to subscribe for blockchain events.
 
-The DApp server is accessed via HTTPS, so your server must have an FQDN.
+**Note**: The DApp server is accessed via HTTPS, so your server must have an FQDN.\
 A self-signed certificate will be received on start-up. This certificate will be subsequently renewed automatically.
 
 ## 2. Overview of technical architecture
@@ -61,46 +61,41 @@ The DApp server provides the following endpoints:
 -   https://your.domain/arangodb
 -   https://your.domain/metrics
 
-All endpoints requires basic authorization.
+All endpoints require basic authorization.
 
-### 2.1 Services interaction diagram:
+### 2.1 Service interaction diagram:
 
 ![Services interaction](./docs/system_components.svg):
 
 This scripts run all services as docker containers inside one docker bridge network.\
-The system requirements for this setup are shown below:
+Recommended system configuration for this setup are shown below:
 
-| Configuration | CPU (cores) | RAM (GiB) | Storage (GiB) | Network (Gbit/s) |
-| ------------- | :---------- | :-------- | :------------ | :--------------- |
-| Recommended   | 24          | 128       | 2000          | 1                |
+| CPU (cores) | RAM (GiB) | Storage (GiB)                       | Network (Gbit/s) |
+| ----------- | :-------- | :---------------------------------- | :--------------- |
+| 24          | 128       | 2000                                | 1                |
+|             |           | NVMe SSD disks are recommended      |                  |
 
-DApp Server is storage I/O bound, so NVMe SSD disks are recommended for the storage.
-
-For production use under high load, it makes sense to distribute services across different servers.
-
-**Note**: To connect to a DApp Server you are running with client applications (such as [TONOS-CLI](https://github.com/tonlabs/tonos-cli#21-set-the-network-and-parameter-values)), it should have a domain name and a DNS record. Then its URL may be used to access it.
+**Note**: For production use under high load, it makes sense to distribute services across different servers. Use this repository as a starting point.
 
 ## 3. Getting Started
 
 ### 3.1 Prerequisites
-
-    - git
-    - Docker Engine, Docker CLI, Docker Compose v2 or later
-    **Note**: Make sure to add your user to the docker group, or run subsequent command as superuser:
-    ```
-        sudo usermod -a -G docker $USER
-    ```
+- Host OS: Linux (all scripts tested on Ubuntu 20.04). 
+- Host has a fully qualified domain name.
+- Installed Git, Docker Engine, Docker CLI, Docker Compose v2 or later.
 
 ### 3.2 Configuration
 
 3.2.1 Set variables
 
-    Check `configure.sh` and set at least these enviroment variables:
-     - NETWORK_TYPE
-     - EVERNODE_FQDN
-     - LETSENCRYPT_EMAIL
-     - HTPASSWD, e.g HTPASSWD='admin:$apr1$dZ.erPEP$hwe0sqiw8ars.NUaFumnb0'. Note single quoutes. It is needed to escape "$" symbols.\
-      You can generate HTPASSWD running  `htpasswd -nb admin weakPas$w0rd`.
+Check `configure.sh` and set at least these enviroment variables:
+
+- NETWORK_TYPE
+- EVERNODE_FQDN
+- LETSENCRYPT_EMAIL
+- HTPASSWD, for example: HTPASSWD='admin:$apr1$dZ.erPEP$hwe0sqiw8ars.NUaFumnb0'.\
+  Note single quoutes. It is needed to escape "$" symbols.\
+  You can generate HTPASSWD running  `htpasswd -nb admin weakPas$w0rd`.
 
 3.2.2 Run configuration script
 
@@ -141,8 +136,8 @@ GIT_BRANCH: master
 }
 ```
 
-If the `timediff` parameter is less than 10 seconds, synchronization with masterchain is complete.
-`"sync_status": "synchronization finished"` means synchronization with workchains is complete
+If the `timediff` parameter is less than 10 seconds, synchronization with masterchain is complete.\
+`"sync_status": "synchronization finished"` means synchronization with workchains is complete.
 
 ### 3.4 Tests
 
