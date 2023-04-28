@@ -1,0 +1,25 @@
+version: '2.3'
+services:
+  q-server:
+    build:
+      context: ./build
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=q-server
+      - VIRTUAL_PORT=4000
+      - Q_DATA_MUT=http://arangodb:8529
+      - Q_DATA_HOT=http://arangodb:8529
+      - Q_REQUESTS_MODE=kafka
+      - Q_REQUESTS_SERVER=kafka:9092
+      - Q_REQUESTS_TOPIC=requests
+      - Q_QUERY_MAX_RUNTIME=60
+      - Q_SLOW_QUERIES=enable
+
+    networks:
+      - {{NETWORK}}
+    expose:
+      - "4000"
+    mem_limit: {{QSERVER_MEMORY}}
+networks:
+  {{NETWORK}}:
+    external: true

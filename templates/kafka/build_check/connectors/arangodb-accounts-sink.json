@@ -1,0 +1,18 @@
+{
+    "name": "arangodb-accounts-sink",
+    "config": {
+        "connector.class": "io.github.jaredpetersen.kafkaconnectarangodb.sink.ArangoDbSinkConnector",
+        "tasks.max": "1",
+        "topics": "accounts",
+        "arangodb.host":"arangodb",
+        "arangodb.port": "8529",
+        "arangodb.database.name": "blockchain",
+        "transforms": "KeyTransform",
+        "transforms.KeyTransform.field": "id",
+        "transforms.KeyTransform.type": "org.apache.kafka.connect.transforms.HoistField$Key",
+        "key.converter.schemas.enable": "false",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter"
+    }
+}

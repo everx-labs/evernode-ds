@@ -1,0 +1,59 @@
+version: '2.3'
+services:
+  proxy:
+    image: jwilder/nginx-proxy:0.8.0
+      # build:
+      # context: ./build
+#    container_name: proxy
+    restart: unless-stopped
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+    security_opt:
+      - label:type:docker_t
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - {{NETWORK}}
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+      - ./proxy-settings.conf:/etc/nginx/conf.d/proxy-settings.conf
+      #- ./htpasswd:/etc/nginx/htpasswd
+    healthcheck:
+      test: grep -q -e 00000000:0050 -e 00000000:01BB /proc/net/tcp
+      interval: 1m30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
+#    container_name: letsencrypt
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - {{NETWORK}}
+    volumes_from:
+      - proxy
+
+  web.root:
+    image: nginx:1.13.12
+#    container_name: web.root
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST={{EVERNODE_FQDN}}
+      - LETSENCRYPT_HOST={{EVERNODE_FQDN}}
+      - LETSENCRYPT_EMAIL={{LETSENCRYPT_EMAIL}}
+    networks:
+      - {{NETWORK}}
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+    expose:
+      - "80"
+
+networks:
+  {{NETWORK}}:
+    external: true
