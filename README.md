@@ -44,8 +44,7 @@ The instructions and scripts were verified on Ubuntu 20.04.
 
 -   [StatsD exporter](....) to collect and expose metrics to Prometheus.
 
-The client/application interacts with the blockchain by performing the appropriate GraphQL operations:
-
+The client application sends messages to the blockchain and receives the results by performing the appropriate GraphQL operations:
 -   Mutation - to send an external message to the blockchain.
 -   Query - to query blockchain data.
 -   Subscription - to subscribe for blockchain events.
@@ -64,6 +63,12 @@ The DApp server provides the following endpoints:
 All endpoints require basic authorization.
 
 ### 2.1 Service interaction diagram:
+In this diagram, the bold arrows show how external messages are processed.
+- The client application sends a message (represented as a Graphql mutation operation) to the Q-Server.
+- Q-Server sends this message (via Kafka) to RNode for processing.
+- RNode continuously provides (via kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
+- Q-Server queries ArangoDB, thus knowing the result of the message execution.
+
 
 ![Services interaction](./docs/system_components.svg):
 
