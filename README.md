@@ -146,6 +146,33 @@ If the `timediff` parameter is less than 10 seconds, synchronization with master
 
 ### 3.4 Tests
 
-TODO: Add tests to verify that the DApp is really functional
+To verify that the DApp server is really functional run the test bellow.\
+This test deploys wallet and transfers 0.5 tokens from the wallet to another address.
+
+$ docker build --tag evernode_test .
+$ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
+
+#### Example output
+
+```
+> npx ts-node src/wallet.ts
+You can topup your wallet from dashboard at https://dashboard.evercloud.dev
+Please send >= 1 tokens to 0:8a447eca3adde54414ab760d3633b96d5e7706a754450adfed587ac191c5b117
+awaiting...
+```
+
+Here the test will block until you send some tokens to that address.\
+In devnet you can do it using our dashboarsd at `https://dashboard.evercloud.dev` or telegram bot `https://t.me/everdev_giver_bot`
+
+```
+Account balance is: 100 tokens. Account type is 0
+Deploying wallet contract to address: 0:8a447eca3adde54414ab760d3633b96d5e7706a754450adfed587ac191c5b117 and waiting for transaction...
+Contract deployed. Transaction hash 318d2acfabd15a9e5ffd58c06c00074c67eca414f25e973c3332a8aeaa574bf1
+Sending 0.5 token to -1:7777777777777777777777777777777777777777777777777777777777777777
+Transfer completed. Transaction hash 54fdd8cce38c6078a25aae61c7deed2e5664c847c171048a814692440ee37610
+Transaction hash: 1d3bf7ef8a50ad38012f304a38c94fe4bca5bc1b50c2d4dd45ce2a71dc7c0921
+Transaction hash: 318d2acfabd15a9e5ffd58c06c00074c67eca414f25e973c3332a8aeaa574bf1
+Transaction hash: 54fdd8cce38c6078a25aae61c7deed2e5664c847c171048a814692440ee37610
+```
 
 Congratulations! Your DApp server is set up.
