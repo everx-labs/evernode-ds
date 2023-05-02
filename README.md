@@ -57,10 +57,8 @@ A self-signed certificate will be received on start-up. This certificate will be
 The DApp server provides the following endpoints:
 
 -   https://your.domain/graphql
--   https://your.domain/arangodb
+-   https://your.domain/arangodb (requires basic authorization)
 -   https://your.domain/metrics
-
-All endpoints require basic authorization.
 
 ### 2.1 Service interaction diagram:
 In this diagram, the bold arrows show how external messages are processed.
@@ -75,11 +73,10 @@ In this diagram, the bold arrows show how external messages are processed.
 This scripts run all services as docker containers inside one docker bridge network.\
 Recommended system configuration for this setup are shown below:
 
-| CPU (cores) | RAM (GiB) | Storage (GiB)                       | Network (Gbit/s) |
-| ----------- | :-------- | :---------------------------------- | :--------------- |
-| 24          | 128       | 2000                                | 1                |
-|             |           | NVMe SSD disks are recommended      |                  |
-
+| CPU (cores) | RAM (GiB) | Storage (GiB)                        | Network (Gbit/s) |
+| ----------- | :-------- | :----------------------------------- | :--------------- |
+| 24          | 128       | 2000. NVMe SSD disks are recommended | 1                |
+ 
 **Note**: For production use under high load, it makes sense to distribute services across different servers. Use this repository as a starting point.
 
 ## 3. Getting Started
@@ -98,8 +95,8 @@ Check `configure.sh` and set at least these enviroment variables:
 - NETWORK_TYPE
 - EVERNODE_FQDN
 - LETSENCRYPT_EMAIL
-- HTPASSWD, for example: HTPASSWD='admin:$apr1$dZ.erPEP$hwe0sqiw8ars.NUaFumnb0'.\
-  Note single quoutes. It is needed to escape "$" symbols.\
+- HTPASSWD. Set this variable if you need access to the ArangoDB web interface.\
+  For example: HTPASSWD='admin:$apr1$dZ.erPEP$hwe0sqiw8ars.NUaFumnb0'. Single quoutes needed to escape "$" symbols.\
   You can generate HTPASSWD running  `htpasswd -nb admin weakPas$w0rd`.
 
 3.2.2 Run configuration script
