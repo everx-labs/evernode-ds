@@ -57,4 +57,5 @@ git clone ${Q_SERVER_GITHUB_REPO} --branch ${Q_SERVER_GITHUB_COMMIT} deploy/q-se
 
 ./templates/templater.sh deploy/ton-node/start_node.sh  
 
+echo "Success! Output files are saved in the ./deploy directory"
 

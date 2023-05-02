@@ -26,6 +26,8 @@ The instructions and scripts were verified on Ubuntu 20.04.
     -   [3.2 Configuration](#32-configuration)
     -   [3.3 Deployment](#33-deployment)
     -   [3.4 Tests](#34-tests)
+-   [4. Notes](#4-notes)
+-   [5. Related projects](#5-related-projects)
 
 ## 1. What is Evernode DApp Server?
 
@@ -37,7 +39,8 @@ The client application can send messages to the blockchain and receive the resul
 -   Query - to query blockchain data.
 -   Subscription - to subscribe for blockchain events.
 
- DApp Server consists of: 
+DApp Server consists of:
+
 -   [Everscale node](https://github.com/tonlabs/ever-node), written in Rust and focused on performance and safety,
     is the core element of DApp Server.
 
@@ -50,7 +53,6 @@ The client application can send messages to the blockchain and receive the resul
 -   [Kafka](https://kafka.apache.org/documentation/) stream-processing platform for communication between services.
 
 -   [StatsD exporter](https://github.com/prometheus/statsd_exporter) to collect and expose metrics to Prometheus.
-
 
 ## 2. Overview of technical architecture
 
@@ -78,7 +80,7 @@ Recommended system configuration for this setup are shown below:
 | ----------- | :-------- | :------------------------------------- | :--------------- |
 | 24          | 128       | 2000. (NVMe SSD disks are recommended) | 1                |
 
-**Note**: For production use under high load, it makes sense to distribute services across different servers. Use this repository as a starting point.
+See [4. Notes](#4-notes)
 
 ## 3. Getting Started
 
@@ -148,10 +150,12 @@ If the `timediff` parameter is less than 10 seconds, synchronization with master
 
 To verify that the DApp server is really functional run the test bellow.\
 This test deploys wallet and transfers 0.5 tokens from the wallet to another address.
+
 ```
 $ docker build --tag evernode_test .
 $ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
 ```
+
 #### Example output
 
 ```
@@ -176,3 +180,16 @@ Transaction hash: 54fdd8cce38c6078a25aae61c7deed2e5664c847c171048a814692440ee376
 ```
 
 Congratulations! Your DApp server is set up.
+
+## 4. Notes
+
+-   This repository is a "quick start" to get your first DApp server up and running.
+-   The installation process is simple, written in pure bash and requires installation from scratch. 
+-   For simplicity, all services are deployed on one host and the system requirements for it are high, so
+    it makes sense to distribute services across different servers.\
+    After understanding this installation process, you can easily customize it for yourself.
+
+## 5. Related projects
+
+-   [itgoldio/everscale-dapp-server](https://github.com/itgoldio/everscale-dapp-server)
+    Consider this project if you prefer deployment via Ansible.
