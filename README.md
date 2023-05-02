@@ -1,4 +1,4 @@
-# Evernode DApp Server (DS)
+# Evernode DApp Server
 
 [Evernode Dapp Server](https://docs.evercloud.dev/products/dapp-server-ds) is a community (open source) version of [Evernode Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
 
@@ -13,7 +13,7 @@ Evernode Dapp Server is compatible with [ever-sdk](https://github.com/tonlabs/ev
   </a>
 </p>
 
-This repository contains instructions on how to run your own free instance of Evernode Platform to connect your application to TVM blockchains.
+This repository contains instructions on how to run your own free instance of Evernode Platform to connect your application to TVM blockchains.\
 The instructions and scripts were verified on Ubuntu 20.04.
 
 ## Table of Contents
@@ -29,12 +29,19 @@ The instructions and scripts were verified on Ubuntu 20.04.
 
 ## 1. What is Evernode DApp Server?
 
-Evernode DS is a set of services that allow your applications to interact with the TVM blockchains:
+Evernode DApp Server is a set of services that provides a GraphQL API for TVM blockchains.
 
+The client application can send messages to the blockchain and receive the results by performing the appropriate GraphQL operations:
+
+-   Mutation - to send an external message to the blockchain.
+-   Query - to query blockchain data.
+-   Subscription - to subscribe for blockchain events.
+
+ DApp Server consists of: 
 -   [Everscale node](https://github.com/tonlabs/ton-labs-node), written in Rust and focused on performance and safety,
-    is the core element of Evernode DS.
+    is the core element of DApp Server.
 
--   [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (referred as Q-Server) provides EVER SDK GraphQL
+-   [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (referred as Q-Server) provides GraphQL
     endpoint for sending messages and quering blockchain.
 
 -   [ArangoDB](https://www.arangodb.com/documentation/). Multi-model database with the information about all
@@ -44,18 +51,13 @@ Evernode DS is a set of services that allow your applications to interact with t
 
 -   [StatsD exporter](....) to collect and expose metrics to Prometheus.
 
-The client application sends messages to the blockchain and receives the results by performing the appropriate GraphQL operations:
-
--   Mutation - to send an external message to the blockchain.
--   Query - to query blockchain data.
--   Subscription - to subscribe for blockchain events.
 
 **Note**: The DApp server is accessed via HTTPS, so your server must have an FQDN.\
 A self-signed certificate will be received on start-up. This certificate will be subsequently renewed automatically.
 
 ## 2. Overview of technical architecture
 
-The DApp server provides the following endpoints:
+Evernode DApp server provides the following endpoints:
 
 -   https://your.domain/graphql
 -   https://your.domain/arangodb (requires basic authorization)
@@ -75,9 +77,9 @@ In this diagram, the bold arrows show how external messages are processed.
 This scripts run all services as docker containers inside one docker bridge network.\
 Recommended system configuration for this setup are shown below:
 
-| CPU (cores) | RAM (GiB) | Storage (GiB)                        | Network (Gbit/s) |
-| ----------- | :-------- | :----------------------------------- | :--------------- |
-| 24          | 128       | 2000. NVMe SSD disks are recommended | 1                |
+| CPU (cores) | RAM (GiB) | Storage (GiB)                          | Network (Gbit/s) |
+| ----------- | :-------- | :------------------------------------- | :--------------- |
+| 24          | 128       | 2000. (NVMe SSD disks are recommended) | 1                |
 
 **Note**: For production use under high load, it makes sense to distribute services across different servers. Use this repository as a starting point.
 
@@ -102,7 +104,7 @@ Check `configure.sh` and set at least these enviroment variables:
      For example: HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'. Single quoutes needed to escape "$" symbols.\
      You can generate HTPASSWD running `htpasswd -nb admin 12345`
 
-    3.2.2 Run configuration script
+3.2.2 Run configuration script
 
 ```
 $ ./configure.sh
@@ -148,10 +150,10 @@ If the `timediff` parameter is less than 10 seconds, synchronization with master
 
 To verify that the DApp server is really functional run the test bellow.\
 This test deploys wallet and transfers 0.5 tokens from the wallet to another address.
-
+```
 $ docker build --tag evernode_test .
 $ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
-
+```
 #### Example output
 
 ```
@@ -161,8 +163,8 @@ Please send >= 1 tokens to 0:8a447eca3adde54414ab760d3633b96d5e7706a754450adfed5
 awaiting...
 ```
 
-Here the test will block until you send some tokens to that address.\
-In devnet you can do it using our dashboarsd at `https://dashboard.evercloud.dev` or telegram bot `https://t.me/everdev_giver_bot`
+> Here the test will block until you send some tokens to that address.\
+> In devnet you can do it using our dashboarsd at https://dashboard.evercloud.dev or telegram bot https://t.me/everdev_giver_bot
 
 ```
 Account balance is: 100 tokens. Account type is 0
