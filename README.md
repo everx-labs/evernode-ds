@@ -1,8 +1,8 @@
 # Evernode DApp Server
 
-[Evernode Dapp Server](https://docs.evercloud.dev/products/dapp-server-ds) is a community (open source) version of [Evernode Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
+Evernode Dapp Server is a community (open source) version of [Ever Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
 
-Evernode Dapp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-inpage-provider) and other libraries and tools for TVM blockchains.
+Evernode Dapp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-standalone-client) and other libraries and tools for TVM blockchains.
 
 <p align="center">
   <a href="https://docs.everscale.network/">
@@ -38,18 +38,18 @@ The client application can send messages to the blockchain and receive the resul
 -   Subscription - to subscribe for blockchain events.
 
  DApp Server consists of: 
--   [Everscale node](https://github.com/tonlabs/ton-labs-node), written in Rust and focused on performance and safety,
+-   [Everscale node](https://github.com/tonlabs/ever-node), written in Rust and focused on performance and safety,
     is the core element of DApp Server.
 
 -   [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (referred as Q-Server) provides GraphQL
-    endpoint for sending messages and quering blockchain.
+    endpoint for sending messages and querying blockchain.
 
 -   [ArangoDB](https://www.arangodb.com/documentation/). Multi-model database with the information about all
     blockchain entities (like accounts, blocks, transactions, etc.) stored over time.
 
 -   [Kafka](https://kafka.apache.org/documentation/) stream-processing platform for communication between services.
 
--   [StatsD exporter](....) to collect and expose metrics to Prometheus.
+-   [StatsD exporter](https://github.com/prometheus/statsd_exporter) to collect and expose metrics to Prometheus.
 
 
 ## 2. Overview of technical architecture
@@ -64,9 +64,9 @@ Evernode DApp server provides the following endpoints:
 
 In this diagram, the bold arrows show how external messages are processed.
 
--   The client application sends a message (represented as a Graphql mutation operation) to the Q-Server.
+-   The client application sends a message (represented as a GraphQL mutation operation) to the Q-Server.
 -   Q-Server sends this message (via Kafka) to RNode for processing.
--   RNode continuously provides (via kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
+-   RNode continuously provides (via Kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
 -   Q-Server queries ArangoDB, thus knowing the result of the message execution.
 
 ![Services interaction](./docs/system_components.svg):
@@ -93,7 +93,7 @@ Recommended system configuration for this setup are shown below:
 
 3.2.1 Set variables
 
-Check `configure.sh` and set at least these enviroment variables:
+Check `configure.sh` and set at least these environment variables:
 
 -   NETWORK_TYPE
 -   EVERNODE_FQDN
@@ -114,7 +114,7 @@ This script creates `./deploy` directory
 
 Run `./up.sh`.
 
-After the script completes normally (it takes 30 min apox.), the node starts synchronizing its state, which can take several hours.\
+After the script completes normally (it takes 30 min approx.), the node starts synchronizing its state, which can take several hours.\
 Use the following command to check the progress:
 
 ```
@@ -162,7 +162,7 @@ awaiting...
 ```
 
 > Here the test will block until you send some tokens to that address.\
-> In devnet you can do it using our dashboarsd at https://dashboard.evercloud.dev or telegram bot https://t.me/everdev_giver_bot
+> In devnet you can do it using our dashboard at https://dashboard.evercloud.dev or telegram bot https://t.me/everdev_giver_bot
 
 ```
 Account balance is: 100 tokens. Account type is 0
