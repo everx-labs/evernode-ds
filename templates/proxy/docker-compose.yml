@@ -21,7 +21,7 @@ services:
       - ./vhost.d:/etc/nginx/vhost.d
       - ./html:/usr/share/nginx/html
       - ./proxy-settings.conf:/etc/nginx/conf.d/proxy-settings.conf
-      #- ./htpasswd:/etc/nginx/htpasswd
+      - ./.htpasswd:/etc/nginx/.htpasswd
     healthcheck:
       test: grep -q -e 00000000:0050 -e 00000000:01BB /proc/net/tcp
       interval: 1m30s

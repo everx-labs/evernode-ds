@@ -29,7 +29,7 @@ The instructions and scripts were verified on Ubuntu 20.04.
 
 ## 1. What is Evernode DApp Server?
 
- Evernode DS is a set of services that allow your applications to interact with the TVM blockchains:
+Evernode DS is a set of services that allow your applications to interact with the TVM blockchains:
 
 -   [Everscale node](https://github.com/tonlabs/ton-labs-node), written in Rust and focused on performance and safety,
     is the core element of Evernode DS.
@@ -45,6 +45,7 @@ The instructions and scripts were verified on Ubuntu 20.04.
 -   [StatsD exporter](....) to collect and expose metrics to Prometheus.
 
 The client application sends messages to the blockchain and receives the results by performing the appropriate GraphQL operations:
+
 -   Mutation - to send an external message to the blockchain.
 -   Query - to query blockchain data.
 -   Subscription - to subscribe for blockchain events.
@@ -61,12 +62,13 @@ The DApp server provides the following endpoints:
 -   https://your.domain/metrics
 
 ### 2.1 Service interaction diagram:
-In this diagram, the bold arrows show how external messages are processed.
-- The client application sends a message (represented as a Graphql mutation operation) to the Q-Server.
-- Q-Server sends this message (via Kafka) to RNode for processing.
-- RNode continuously provides (via kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
-- Q-Server queries ArangoDB, thus knowing the result of the message execution.
 
+In this diagram, the bold arrows show how external messages are processed.
+
+-   The client application sends a message (represented as a Graphql mutation operation) to the Q-Server.
+-   Q-Server sends this message (via Kafka) to RNode for processing.
+-   RNode continuously provides (via kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
+-   Q-Server queries ArangoDB, thus knowing the result of the message execution.
 
 ![Services interaction](./docs/system_components.svg):
 
@@ -76,15 +78,16 @@ Recommended system configuration for this setup are shown below:
 | CPU (cores) | RAM (GiB) | Storage (GiB)                        | Network (Gbit/s) |
 | ----------- | :-------- | :----------------------------------- | :--------------- |
 | 24          | 128       | 2000. NVMe SSD disks are recommended | 1                |
- 
+
 **Note**: For production use under high load, it makes sense to distribute services across different servers. Use this repository as a starting point.
 
 ## 3. Getting Started
 
 ### 3.1 Prerequisites
-- Host OS: Linux (all scripts tested on Ubuntu 20.04). 
-- Host has a fully qualified domain name.
-- Installed Git, Docker Engine, Docker CLI, Docker Compose v2 or later.
+
+-   Host OS: Linux (all scripts tested on Ubuntu 20.04).
+-   Host has a fully qualified domain name.
+-   Installed Git, Docker Engine, Docker CLI, Docker Compose v2 or later.
 
 ### 3.2 Configuration
 
@@ -92,14 +95,14 @@ Recommended system configuration for this setup are shown below:
 
 Check `configure.sh` and set at least these enviroment variables:
 
-- NETWORK_TYPE
-- EVERNODE_FQDN
-- LETSENCRYPT_EMAIL
-- HTPASSWD. Set this variable if you need access to the ArangoDB web interface.\
-  For example: HTPASSWD='admin:$apr1$dZ.erPEP$hwe0sqiw8ars.NUaFumnb0'. Single quoutes needed to escape "$" symbols.\
-  You can generate HTPASSWD running  `htpasswd -nb admin weakPas$w0rd`.
+-   NETWORK_TYPE
+-   EVERNODE_FQDN
+-   LETSENCRYPT_EMAIL
+-   HTPASSWD. Set this variable if you need access to the ArangoDB web interface.\
+     For example: HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'. Single quoutes needed to escape "$" symbols.\
+     You can generate HTPASSWD running `htpasswd -nb admin 12345`
 
-3.2.2 Run configuration script
+    3.2.2 Run configuration script
 
 ```
 $ ./configure.sh

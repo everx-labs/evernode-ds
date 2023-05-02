@@ -27,6 +27,8 @@ location = /arangodb {
 }
 
 location /arangodb {
+      auth_basic "Restricted Content";
+      auth_basic_user_file /etc/nginx/.htpasswd;
       proxy_pass http://arangodb:8529/;
       proxy_set_header X-Script-Name /arangodb;
 }

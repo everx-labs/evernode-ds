@@ -6,6 +6,7 @@
         "topics": "blocks",
         "arangodb.host":"arangodb",
         "arangodb.port": "8529",
+        "arangodb.user": "root",
         "arangodb.database.name": "blockchain",
         "transforms": "KeyTransform",
         "transforms.KeyTransform.field": "id",

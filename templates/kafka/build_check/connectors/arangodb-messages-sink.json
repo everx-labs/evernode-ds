@@ -6,6 +6,7 @@
         "topics": "messages",
         "arangodb.host":"arangodb",
         "arangodb.port": "8529",
+        "arangodb.user": "root",
         "arangodb.database.name": "blockchain",
         "arangodb.insert.overwritemode": "update",
         "transforms": "KeyTransform",

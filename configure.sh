@@ -4,7 +4,7 @@
 export NETWORK_TYPE=net.ton.dev
 export EVERNODE_FQDN=empty4.deploy.tonlabs.io
 export LETSENCRYPT_EMAIL=artem.a.zhdanov@gmail.com
-export HTPASSWD='admin:$apr1$tn69YEhu$ob9tNcnBCOYQm0oz.iWsY0'
+export HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'
 export VALIDATOR_NAME=ex_my_validator
 
 #----- Next variables can be used as reasonable defaults: -----
@@ -28,10 +28,10 @@ export TON_NODE_TOOLS_GITHUB_COMMIT_ID="master"
 Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 Q_SERVER_GITHUB_COMMIT="0.54.0"
 
-# This is a name of the internal (docker bridge) network. Set it arbitrarily. 
+# This is a name of the internal (docker bridge) network. Set this name arbitrarily. 
 export NETWORK=evernode_ds  
 
-# export COMPOSE_HTTP_TIMEOUT=120 
+export COMPOSE_HTTP_TIMEOUT=120 # TODO: do we really need this?
 
 # 
 # Create internal network if not exists
@@ -39,10 +39,8 @@ export NETWORK=evernode_ds
 docker network inspect $NETWORK >/dev/null 2>&1 ||  docker network create $NETWORK -d bridge
 
 
-##
-# Create `deploy` directory as a copy of `templates` 
-# and replace all {{VAR}} with enviroment variables
-#
+# Next lines create `deploy` directory as a copy of 
+# `templates` directory and replace all {{VAR}} with enviroment variables
 rm -rf deploy ; cp -R templates deploy
 find deploy \
     -type f \( -name '*.yml' -o -name *.html \) \
@@ -50,15 +48,13 @@ find deploy \
     -exec ./templates/templater.sh {} \;
 
 mv deploy/proxy/vhost.d/{host.yourdomain.com,$EVERNODE_FQDN}
+echo $HTPASSWD > deploy/proxy/.htpasswd
 
 
 # Run q-server
-### rm -rf ./deploy/q-server/build/ton-q-server
-### cd ./deploy/q-server/build  && git clone ${Q_SERVER_GITHUB_REPO} --branch ${Q_SERVER_GITHUB_COMMIT}
-
-
+rm -rf ./deploy/q-server/build/ton-q-server
+git clone ${Q_SERVER_GITHUB_REPO} --branch ${Q_SERVER_GITHUB_COMMIT} deploy/q-server/build/ton-q-server
 
 ./templates/templater.sh deploy/ton-node/start_node.sh  
 
-# echo "admin:\$apr1\$d0ifqbt3\$iayulpIOP2.IS4Sy1I2zJ0" >"${DOCKER_COMPOSE_DIR}/proxy/htpasswd/arango.${HOSTNAME}"
 
