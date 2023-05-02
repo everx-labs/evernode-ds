@@ -29,7 +29,7 @@ The instructions and scripts were verified on Ubuntu 20.04.
 
 ## 1. What is Evernode DApp Server?
 
-Evernode DApp Server is a set of services that provides a GraphQL API for TVM blockchains.
+Evernode DApp Server is a set of services that provides a [GraphQL API](https://docs.evercloud.dev/reference/graphql-api) for TVM blockchains.
 
 The client application can send messages to the blockchain and receive the results by performing the appropriate GraphQL operations:
 
@@ -51,9 +51,6 @@ The client application can send messages to the blockchain and receive the resul
 
 -   [StatsD exporter](....) to collect and expose metrics to Prometheus.
 
-
-**Note**: The DApp server is accessed via HTTPS, so your server must have an FQDN.\
-A self-signed certificate will be received on start-up. This certificate will be subsequently renewed automatically.
 
 ## 2. Overview of technical architecture
 
@@ -88,7 +85,8 @@ Recommended system configuration for this setup are shown below:
 ### 3.1 Prerequisites
 
 -   Host OS: Linux (all scripts tested on Ubuntu 20.04).
--   Host has a fully qualified domain name.
+-   DApp server is accessed via HTTPS, so your server must have a fully qualified domain name.\
+    A self-signed certificate will be received on start-up and will be renewed automatically.
 -   Installed Git, Docker Engine, Docker CLI, Docker Compose v2 or later.
 
 ### 3.2 Configuration
@@ -110,7 +108,7 @@ Check `configure.sh` and set at least these enviroment variables:
 $ ./configure.sh
 ```
 
-This script creates `./deployment` directory
+This script creates `./deploy` directory
 
 ### 3.3 Deployment
 
