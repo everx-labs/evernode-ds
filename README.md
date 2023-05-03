@@ -148,10 +148,11 @@ If the `timediff` parameter is less than 10 seconds, synchronization with master
 
 ### 3.4 Tests
 
-To verify that the DApp server is really functional run the test bellow.\
+To verify that the DApp server is actually functional, after the sync process is complete, run the test below.
 This test deploys wallet and transfers 0.5 tokens from the wallet to another address.
 
 ```
+$ cd tests
 $ docker build --tag evernode_test .
 $ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
 ```
