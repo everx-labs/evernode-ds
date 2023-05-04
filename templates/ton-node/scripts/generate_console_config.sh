@@ -25,7 +25,8 @@ cp "${TMP_DIR}/default_config.json.tmp" "${TON_NODE_CONFIGS_DIR}/default_config.
 # Generate initial config.json
 cd "${TON_NODE_ROOT_DIR}" && "${TON_NODE_ROOT_DIR}/ton_node" --configs "${TON_NODE_CONFIGS_DIR}" --ckey "$(cat "${TON_NODE_CONFIGS_DIR}/console_client_public.json")" &
 
-sleep 10
+# TODO: Why it's needed?
+sleep 60
 
 if [ ! -f "${TON_NODE_CONFIGS_DIR}/config.json" ]; then
     echo "ERROR: ${TON_NODE_CONFIGS_DIR}/config.json does not exist"

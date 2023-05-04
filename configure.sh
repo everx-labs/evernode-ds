@@ -2,10 +2,10 @@
 
 #----- To configure your Dapp server set at least these environment variables: -----
 export NETWORK_TYPE=net.ton.dev
-export EVERNODE_FQDN=empty4.deploy.tonlabs.io
-export LETSENCRYPT_EMAIL=artem.a.zhdanov@gmail.com
+export EVERNODE_FQDN=your.domain.org
+export LETSENCRYPT_EMAIL=your@email.org
 export HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'
-export VALIDATOR_NAME=ex_my_validator
+export VALIDATOR_NAME=my_validator
 
 #----- Next variables can be used as reasonable defaults: -----
 
@@ -23,7 +23,7 @@ export CONNECT_MEMORY=5G
 export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ever-node"
 export TON_NODE_GITHUB_COMMIT_ID="8ccd0bf976c00f029d152a7f3ca7e86b02899e0f"
 export TON_NODE_TOOLS_GITHUB_REPO="https://github.com/tonlabs/ever-node-tools.git"
-export TON_NODE_TOOLS_GITHUB_COMMIT_ID="master"
+export TON_NODE_TOOLS_GITHUB_COMMIT_ID="master"  # TODO, commit? 
 
 Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 Q_SERVER_GITHUB_COMMIT="0.54.0"
