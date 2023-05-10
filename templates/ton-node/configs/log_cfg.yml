@@ -94,4 +94,4 @@ loggers:
       - stdout_ref
 
   telemetry:
-    level: debug
+    level: info

@@ -41,13 +41,13 @@ The client application can send messages to the blockchain and receive the resul
 
 DApp Server consists of:
 
--   [Everscale node](https://github.com/tonlabs/ever-node), written in Rust and focused on performance and safety,
+-   [Evernode](https://github.com/tonlabs/ever-node), written in Rust and focused on performance and safety,
     is the core element of DApp Server.
 
 -   [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (referred as Q-Server) provides GraphQL
     endpoint for sending messages and querying blockchain.
 
--   [ArangoDB](https://www.arangodb.com/documentation/). Multi-model database with the information about all
+-   [ArangoDB](https://www.arangodb.com/documentation/) - multi-model database with the information about all
     blockchain entities (like accounts, blocks, transactions, etc.) stored over time.
 
 -   [Kafka](https://kafka.apache.org/documentation/) stream-processing platform for communication between services.
@@ -67,8 +67,8 @@ Evernode DApp server provides the following endpoints:
 In this diagram, the bold arrows show how external messages are processed.
 
 -   The client application sends a message (represented as a GraphQL mutation operation) to the Q-Server.
--   Q-Server sends this message (via Kafka) to RNode for processing.
--   RNode continuously provides (via Kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
+-   Q-Server sends this message (via Kafka) to Ever-node for processing.
+-   Ever-node continuously provides (via Kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
 -   Q-Server queries ArangoDB, thus knowing the result of the message execution.
 
 ![Services interaction](./docs/system_components.svg):
@@ -120,7 +120,7 @@ After the script completes normally (it takes 30 min approx.), the node starts s
 Use the following command to check the progress:
 
 ```
-    docker exec rnode /ton-node/tools/console -C /ton-node/configs/console.json --cmd getstats
+    docker exec ever-node /ever-node/tools/console -C /ever-node/configs/console.json --cmd getstats
 ```
 
 Script output example:

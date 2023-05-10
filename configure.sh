@@ -2,10 +2,12 @@
 
 #----- To configure your Dapp server set at least these environment variables: -----
 export NETWORK_TYPE=net.ton.dev
-export EVERNODE_FQDN=your.domain.org
-export LETSENCRYPT_EMAIL=your@email.org
-export HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'
+# export EVERNODE_FQDN=your.domain.org
+export EVERNODE_FQDN=empty4.deploy.tonlabs.io
+#export LETSENCRYPT_EMAIL=your@email.org
+export LETSENCRYPT_EMAIL=artem.a.zhdanov@gmail.com
 export VALIDATOR_NAME=my_validator
+
 
 #----- Next variables can be used as reasonable defaults: -----
 
@@ -47,8 +49,8 @@ find deploy \
     -not -path '*/ton-node/configs/*' \
     -exec ./templates/templater.sh {} \;
 
+cp .htpasswd deploy/proxy
 mv deploy/proxy/vhost.d/{host.yourdomain.com,$EVERNODE_FQDN}
-echo $HTPASSWD > deploy/proxy/.htpasswd
 
 
 # Run q-server

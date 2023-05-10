@@ -11,10 +11,7 @@ services:
       - NETWORK_TYPE={{NETWORK_TYPE}}
       - CONFIGS_PATH=/ton-node/configs
       - STATSD_DOMAIN=statsd
-      - STATSD_PORT=:9125
-        #STAKE:
-        #MSIG_ENABLE:
-        #SDK_URL:
+      - STATSD_PORT=:9125  # ":" here is not a typo.
     ports:
       - {{ADNL_PORT}}:{{ADNL_PORT}}/udp
     networks:

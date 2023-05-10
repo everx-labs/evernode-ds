@@ -9,6 +9,9 @@ directory = /arango/db
 [frontend]
 proxy-request-check = false
 
+[web-interface]
+proxy-request-check = false
+
 [server]
 endpoint = tcp://[::]:8529
 storage-engine = auto

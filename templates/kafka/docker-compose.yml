@@ -77,9 +77,9 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
       KAFKA_JMX_PORT: 9584
-      CONNECT_FETCH_MESSAGE_MAX_BYTES: 3001000
-      CONNECT_MAX_REQUEST_SIZE: 3001000
-      CONNECT_MAX_PARTITION_FETCH_BYTES: 3001000
+      CONNECT_FETCH_MESSAGE_MAX_BYTES: 3001000   # TODO: check if these params are obsolete 
+      CONNECT_MAX_REQUEST_SIZE: 3001000          # 
+      CONNECT_MAX_PARTITION_FETCH_BYTES: 3001000 # 
     networks:
       - {{NETWORK}}
     volumes:
@@ -100,7 +100,7 @@ services:
       connect:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "/work/check.sh connect"]
+      test: ["CMD-SHELL", "/work/check.sh http://connect:8083/connectors"]
       interval: 60s
       timeout: 5s
       retries: 3
