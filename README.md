@@ -1,8 +1,8 @@
 # Evernode DApp Server
 
-Evernode Dapp Server is a community (open source) version of [Ever Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
+Evernode DApp Server is a community (open source) version of [Ever Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
 
-Evernode Dapp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-standalone-client) and other libraries and tools for TVM blockchains.
+Evernode DApp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-standalone-client) and other libraries and tools for TVM blockchains.
 
 <p align="center">
   <a href="https://docs.everscale.network/">

@@ -2,10 +2,8 @@
 
 #----- To configure your Dapp server set at least these environment variables: -----
 export NETWORK_TYPE=net.ton.dev
-# export EVERNODE_FQDN=your.domain.org
-export EVERNODE_FQDN=empty4.deploy.tonlabs.io
-#export LETSENCRYPT_EMAIL=your@email.org
-export LETSENCRYPT_EMAIL=artem.a.zhdanov@gmail.com
+export EVERNODE_FQDN=your.domain.org
+export LETSENCRYPT_EMAIL=your@email.org
 export VALIDATOR_NAME=my_validator
 
 

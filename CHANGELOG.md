@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.3.0] – 2023-04-28
+## [1.0.0] – 2023-05-11
 
 -   Many changes to make the deployment process easier to understand.
--   Add `https://your.domain/arangodb` and `https://your.domain/metrics` endpoints
--   All https endpoints are hidden behind a proxy with basic authorization
--   Remove kafka schema registry, remove connect-cli binary.
+-   Added `https://your.domain/arangodb` and `https://your.domain/metrics` routes.
+-   Basic authentication is required to access the arangodb web interface at https:`//your.domain/arangodb`.
+-   Removed kafka schema registry, remove connect-cli binary.
+-   Arangodb version updated to arangodb:3.10.5
 
 ## [0.2.0] – 2022-10-18
 
