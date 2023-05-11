@@ -156,6 +156,7 @@ This test deploys wallet and transfers 0.5 tokens from the wallet to another add
 
 ```
 $ cd tests
+$ chmod o+w package-lock.json
 $ docker build --tag evernode_test .
 $ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
 ```
