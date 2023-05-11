@@ -24,7 +24,7 @@
             "message_timeout_ms": 100,
             "topic": "blocks",
             "attempt_timeout_ms": 100,
-            "message_max_size": 1000000
+            "message_max_size": 4000000
         },
         "message_producer": {
             "enabled": true,
