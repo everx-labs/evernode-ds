@@ -1,12 +1,12 @@
 #!/bin/bash
 cd deploy/ever-node
 rm -rf build/ever-node
-cd build && git clone --recursive {{TON_NODE_GITHUB_REPO}} ever-node
-cd ever-node && git checkout {{TON_NODE_GITHUB_COMMIT_ID}}
+cd build && git clone --recursive {{EVERNODE_GITHUB_REPO}} ever-node
+cd ever-node && git checkout {{EVERNODE_GITHUB_COMMIT_ID}}
 cd ..
 rm -rf ever-node-tools
-git clone --recursive {{TON_NODE_TOOLS_GITHUB_REPO}}
-cd ever-node-tools && git checkout {{TON_NODE_TOOLS_GITHUB_COMMIT_ID}}
+git clone --recursive {{EVERNODE_TOOLS_GITHUB_REPO}}
+cd ever-node-tools && git checkout {{EVERNODE_TOOLS_GITHUB_COMMIT_ID}}
 cd ../../
 
 echo "==============================================================================="

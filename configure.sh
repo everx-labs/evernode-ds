@@ -20,10 +20,10 @@ export KAFKA_MEMORY=10G
 export CONNECT_MEMORY=5G
 
 
-export TON_NODE_GITHUB_REPO="https://github.com/tonlabs/ever-node"
-export TON_NODE_GITHUB_COMMIT_ID="8ccd0bf976c00f029d152a7f3ca7e86b02899e0f"
-export TON_NODE_TOOLS_GITHUB_REPO="https://github.com/tonlabs/ever-node-tools.git"
-export TON_NODE_TOOLS_GITHUB_COMMIT_ID="master"  # TODO, commit? 
+export EVERNODE_GITHUB_REPO="https://github.com/tonlabs/ever-node"
+export EVERNODE_GITHUB_COMMIT_ID="8ccd0bf976c00f029d152a7f3ca7e86b02899e0f"
+export EVERNODE_TOOLS_GITHUB_REPO="https://github.com/tonlabs/ever-node-tools.git"
+export EVERNODE_TOOLS_GITHUB_COMMIT_ID="master"  # TODO, commit? 
 
 Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
 Q_SERVER_GITHUB_COMMIT="0.54.0"
