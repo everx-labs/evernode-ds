@@ -3,29 +3,26 @@ services:
   node:
     build:
       context: ./build
-    container_name: rnode
+    container_name: ever-node
     restart: unless-stopped
     environment:
       - ADNL_PORT={{ADNL_PORT}}
       - VALIDATOR_NAME={{VALIDATOR_NAME}}
       - NETWORK_TYPE={{NETWORK_TYPE}}
-      - CONFIGS_PATH=/ton-node/configs
+      - CONFIGS_PATH=/ever-node/configs
       - STATSD_DOMAIN=statsd
-      - STATSD_PORT=:9125
-        #STAKE:
-        #MSIG_ENABLE:
-        #SDK_URL:
+      - STATSD_PORT=:9125  # here ":" is not a typo.
     ports:
       - {{ADNL_PORT}}:{{ADNL_PORT}}/udp
     networks:
       - {{NETWORK}}
     volumes:
-      - ./configs/:/ton-node/configs/
-      - ./scripts/:/ton-node/scripts/
-      - ./logs/:/ton-node/logs/
-      - DB:/ton-node/node_db/
+      - ./configs/:/ever-node/configs/
+      - ./scripts/:/ever-node/scripts/
+      - ./logs/:/ever-node/logs/
+      - DB:/ever-node/node_db/
       - /tmp/metrics/:/tmp/metrics/
-    entrypoint: /ton-node/scripts/entrypoint.sh
+    entrypoint: /ever-node/scripts/entrypoint.sh
     command: ["bash"]
     mem_limit: {{NODE_MEMORY}}
     logging:

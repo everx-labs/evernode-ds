@@ -1,6 +1,6 @@
 #!/bin/bash -eEx
 
-echo "INFO: R-Node startup..."
+echo "INFO: ever-node startup..."
 
 echo "INFO: NETWORK_TYPE = ${NETWORK_TYPE}"
 echo "INFO: CONFIGS_PATH = ${CONFIGS_PATH}"
@@ -12,8 +12,8 @@ curl -sS "https://raw.githubusercontent.com/tonlabs/${NETWORK_TYPE}/master/confi
 if [ "$1" = "bash" ]; then
     tail -f /dev/null
 else
-    cd /ton-node
-    exec /ton-node/ton_node --configs "${CONFIGS_PATH}"
+    cd /ever-node
+    exec /ever-node/ton_node --configs "${CONFIGS_PATH}"
 fi
 
-echo "INFO: R-Node startup... DONE"
+echo "INFO: ever-node startup... DONE"

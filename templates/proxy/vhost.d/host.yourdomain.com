@@ -20,16 +20,17 @@ location /graphql {
       add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS';
 }
 
-location = /arangodb {  
-      proxy_pass http://arangodb:8529/;
-      proxy_set_header X-Script-Name /arangodb;
-      proxy_redirect ~^/(.*) arangodb/_db/_system/_admin/aardvark/index.html;
-}
-
 location /arangodb {
       auth_basic "Restricted Content";
       auth_basic_user_file /etc/nginx/.htpasswd;
       proxy_pass http://arangodb:8529/;
+      proxy_set_header X-Script-Name /arangodb;
+}
+
+location /_db {
+      auth_basic "Restricted Content";
+      auth_basic_user_file /etc/nginx/.htpasswd;
+      proxy_pass http://arangodb:8529/_db;
       proxy_set_header X-Script-Name /arangodb;
 }
 

@@ -15,13 +15,13 @@ appenders:
 
   logfile:
     kind: file
-    path: "/ton-node/logs/output.log"
+    path: "/ever-node/logs/output.log"
     encoder:
       pattern: "{d(%s.%f)} {l} [{h({t})}] {I}: {m}{n}"
 
   tvm_logfile:
     kind: file
-    path: "/ton-node/logs/tvm.log"
+    path: "/ever-node/logs/tvm.log"
     encoder:
       pattern: "{m}{n}"
 
@@ -94,4 +94,4 @@ loggers:
       - stdout_ref
 
   telemetry:
-    level: debug
+    level: info

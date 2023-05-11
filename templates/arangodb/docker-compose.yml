@@ -1,8 +1,7 @@
 version: '2.3'
 services:
   arangodb:
-    build:
-      context: ./build
+    image: arangodb:3.10.5
     restart: unless-stopped
     environment:
       ARANGO_NO_AUTH: 1
@@ -13,6 +12,7 @@ services:
       - db3:/var/lib/arangodb3
       - data:/arango/db
       - ./config:/arango/config
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
     expose:
       - "8529"
     mem_limit: {{ARANGO_MEMORY}}
