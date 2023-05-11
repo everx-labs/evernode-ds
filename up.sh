@@ -16,7 +16,7 @@ docker-compose -f deploy/q-server/docker-compose.yml up --build -d
 
 
 echo "Starting Node"
-./deploy/ton-node/start_node.sh 
+./deploy/ever-node/start_node.sh 
 
 echo "Starting reverse proxy"
 docker-compose -f deploy/proxy/docker-compose.yml up --build -d

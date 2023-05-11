@@ -46,7 +46,7 @@ docker network inspect $NETWORK >/dev/null 2>&1 ||  docker network create $NETWO
 rm -rf deploy ; cp -R templates deploy
 find deploy \
     -type f \( -name '*.yml' -o -name *.html \) \
-    -not -path '*/ton-node/configs/*' \
+    -not -path '*/ever-node/configs/*' \
     -exec ./templates/templater.sh {} \;
 
 cp .htpasswd deploy/proxy
@@ -57,7 +57,7 @@ mv deploy/proxy/vhost.d/{host.yourdomain.com,$EVERNODE_FQDN}
 rm -rf ./deploy/q-server/build/ton-q-server
 git clone ${Q_SERVER_GITHUB_REPO} --branch ${Q_SERVER_GITHUB_COMMIT} deploy/q-server/build/ton-q-server
 
-./templates/templater.sh deploy/ton-node/start_node.sh  
+./templates/templater.sh deploy/ever-node/start_node.sh  
 
 echo "Success! Output files are saved in the ./deploy directory"
 

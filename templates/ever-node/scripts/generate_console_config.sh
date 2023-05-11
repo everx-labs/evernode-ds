@@ -4,7 +4,7 @@ if [ "$DEBUG" = "yes" ]; then
     set -x
 fi
 
-export TON_NODE_ROOT_DIR="/ton-node"
+export TON_NODE_ROOT_DIR="/ever-node"
 export TON_NODE_CONFIGS_DIR="${TON_NODE_ROOT_DIR}/configs"
 export TON_NODE_TOOLS_DIR="${TON_NODE_ROOT_DIR}/tools"
 export TON_NODE_LOGS_DIR="${TON_NODE_ROOT_DIR}/logs"

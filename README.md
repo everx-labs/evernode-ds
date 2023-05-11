@@ -100,11 +100,14 @@ Check `configure.sh` and set at least these environment variables:
 -   NETWORK_TYPE
 -   EVERNODE_FQDN
 -   LETSENCRYPT_EMAIL
--   HTPASSWD. Set this variable if you need access to the ArangoDB web interface.\
-     For example: HTPASSWD='admin:$apr1$zpnuu5ho$Swc8jhnhlHV.qqgoaLGdO1'. Single quoutes needed to escape "$" symbols.\
-     You can generate HTPASSWD running `htpasswd -nb admin 12345`
 
-3.2.2 Run configuration script
+3.2.2 Generate credentials to access the ArangoDB web interface 
+
+Generate credentials (usernames and password) for basic authentication and update `.htpasswd` file.\
+You can generate it by running `htpasswd -nb <name> <password>`
+
+
+3.2.3 Run configuration script
 
 ```
 $ ./configure.sh
@@ -185,7 +188,7 @@ Congratulations! Your DApp server is set up.
 ## 4. Notes
 
 -   This repository is a "quick start" to get your first DApp server up and running.
--   The installation process is simple, written in pure bash and requires installation from scratch. 
+-   The installation process is simple, written in pure bash and requires installation from scratch.
 -   For simplicity, all services are deployed on one host and the system requirements for it are high, so
     it makes sense to distribute services across different servers.\
     After understanding this installation process, you can easily customize it for yourself.
