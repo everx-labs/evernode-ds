@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] – 2023-05-11
+## [1.0.0] – 2023-05-17
 
 -   Many changes to make the deployment process easier to understand.
 -   Added `https://your.domain/arangodb` and `https://your.domain/metrics` routes.
@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 -   Removed kafka schema registry, remove connect-cli binary.
 -   Arangodb version updated to arangodb:3.10.5
 -   Message size in Kafka increased up to 4Mb.
+-   ton-q-server updated to 0.57.0 version  
+-   ton-labs-node renamed to ever-node and updated from befb1ba4d91733ee2c14fa3cf4ebe8047b279e92 to a800b66765424e7870929e676ac6ea203390ff01
 
 ## [0.2.0] – 2022-10-18
 
