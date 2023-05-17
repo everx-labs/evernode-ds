@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 -   Basic authentication is required to access the arangodb web interface at https:`//your.domain/arangodb`.
 -   Removed kafka schema registry, remove connect-cli binary.
 -   Arangodb version updated to arangodb:3.10.5
+-   Message size in Kafka increased up to 4Mb.
 
 ## [0.2.0] – 2022-10-18
 

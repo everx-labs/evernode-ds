@@ -1,7 +1,5 @@
-FROM node:14-buster
-
+FROM node:18-buster
 USER node
-
 WORKDIR /home/node
 USER node
 COPY ton-q-server /home/node/
