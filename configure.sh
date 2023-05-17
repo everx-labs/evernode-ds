@@ -26,7 +26,7 @@ export EVERNODE_TOOLS_GITHUB_REPO="https://github.com/tonlabs/ever-node-tools.gi
 export EVERNODE_TOOLS_GITHUB_COMMIT_ID="master"  # TODO, commit? 
 
 Q_SERVER_GITHUB_REPO="https://github.com/tonlabs/ton-q-server"
-Q_SERVER_GITHUB_COMMIT="0.54.0"
+Q_SERVER_GITHUB_COMMIT="0.57.0"
 
 # This is a name of the internal (docker bridge) network. Set this name arbitrarily. 
 export NETWORK=evernode_ds  
