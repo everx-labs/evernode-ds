@@ -1,8 +1,8 @@
-# Evernode DApp Server (DS)
-[Evernode Dapp Server](https://docs.evercloud.dev/products/dapp-server-ds) is a community (open source) version of [Evernode Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh)  that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
+# Evernode DApp Server
 
+Evernode DApp Server is a community (open source) version of [Ever Platform](https://docs.evercloud.dev/) (client supernode with GraphQL API) for TVM blockchains (Everscale, Venom, TON, Gosh) that exposes [GraphQL API](https://docs.evercloud.dev/reference/graphql-api).
 
-Compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-inpage-provider) and other libraries and tools for TVM blockchains. 
+Evernode DApp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-standalone-client) and other libraries and tools for TVM blockchains.
 
 <p align="center">
   <a href="https://docs.everscale.network/">
@@ -13,92 +13,121 @@ Compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https
   </a>
 </p>
 
+This repository contains instructions on how to run your own free instance of Evernode Platform to connect your application to TVM blockchains.\
+The instructions and scripts were verified on Ubuntu 20.04.
 
-This HOWTO contains instructions on how to build and configure your own free instance of Evernode Platform to connect your application to Everscale. The instructions and scripts below were verified on Ubuntu 20.04.
+## Table of Contents
 
-# Table of Contents
-- [What is Evernode Dapp Server?](#what-is-evernode-dapp-server)
-- [Overview of technical architecture](#overview-of-technical-architecture)
-- [Getting Started](#getting-started)
-  - [1. System Requirements](#1-system-requirements)
-  - [2. Prerequisites](#2-prerequisites)
-    - [2.1 Set the Environment](#21-set-the-environment)
-    - [2.2 Install Dependencies](#22-install-dependencies)
-    - [2.3 Deploy Full Node](#23-deploy-full-node)
-- [Check Node synchronization status](#Check-Node-synchronization-status)
-- [Stopping, restarting and deleting DApp Server](#stopping-restarting-and-deleting-dapp-server)
-- [Redeploying DApp Server](#redeploying-dapp-server)
+-   [1. What is Evernode DApp Server?](#1-what-is-evernode-dapp-server)
+-   [2. Overview of technical architecture](#2-overview-of-technical-architecture)
+    -   [2.1 Service interaction diagram](#21-service-interaction-diagram)
+-   [3. Getting Started](#3-getting-started)
+    -   [3.1 Prerequisites](#31-prerequisites)
+    -   [3.2 Configuration](#32-configuration)
+    -   [3.3 Deployment](#33-deployment)
+    -   [3.4 Tests](#34-tests)
+-   [4. Notes](#4-notes)
+-   [5. Related projects](#5-related-projects)
 
-# What is Evernode Dapp Server?
+## 1. What is Evernode DApp Server?
 
-Evernode DS is a set of services enabling you to work with Everscale blockchain.
+Evernode DApp Server is a set of services that provides a [GraphQL API](https://docs.evercloud.dev/reference/graphql-api) for TVM blockchains.
 
-The core element of Evernode DS is [Everscale node written in Rust](https://github.com/tonlabs/ton-labs-node) focused on performance and safety.\
-Evernode DS is a set of services serving EVER SDK GraphQL endpoint:
- - [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (aka Q-Server) for serving GraphQL queries.
- -  Scalable multi-model database [ArangoDB](https://www.arangodb.com/documentation/) with the information about all blockchain entities (like accounts, blocks, transactions, etc.) stored over time
- - A high-throughput, low-latency streaming platform [Kafka](https://kafka.apache.org/documentation/) for communication between services.
- - StatsD exporter to collect and export metrics to Prometheus 
+The client application can send messages to the blockchain and receive the results by performing the appropriate GraphQL operations:
 
-All the Evernode DS services can be easily deployed with Docker/Docker Compose wrapped into unix shell scripts, provided below.
+-   Mutation - to send an external message to the blockchain.
+-   Query - to query blockchain data.
+-   Subscription - to subscribe for blockchain events.
 
-> **Note**: Rust node is included in the Evernode DS, and doesn't have to be installed separately.
+DApp Server consists of:
 
-# Overview of technical architecture
+-   [Evernode](https://github.com/tonlabs/ever-node), written in Rust and focused on performance and safety,
+    is the core element of DApp Server.
 
-All system components run as docker containers inside one docker bridge network and are shown in the diagram below:
+-   [Everscale GraphQL Server](https://github.com/tonlabs/ton-q-server) (referred as Q-Server) provides GraphQL
+    endpoint for sending messages and querying blockchain.
 
-![System components](./docs/system_components.svg)
+-   [ArangoDB](https://www.arangodb.com/documentation/) - multi-model database with the information about all
+    blockchain entities (like accounts, blocks, transactions, etc.) stored over time.
 
-# Getting Started
+-   [Kafka](https://kafka.apache.org/documentation/) stream-processing platform for communication between services.
 
-## 1. System Requirements
-| Configuration | CPU (cores) | RAM (GiB) | Storage (GiB) | Network (Gbit/s)|
-|---|:---|:---|:---|:---|
-| Recommended |24|128|2000|1| 
+-   [StatsD exporter](https://github.com/prometheus/statsd_exporter) to collect and expose metrics to Prometheus.
 
-DApp Server is storage I/O bound, so NVMe SSD disks are recommended for the storage.
+## 2. Overview of technical architecture
 
-**Note**: To connect to a DApp Server you are running with client applications (such as [TONOS-CLI](https://github.com/tonlabs/tonos-cli#21-set-the-network-and-parameter-values)), it should have a domain name and a DNS record. Then its URL may be used to access it.
+Evernode DApp server provides the following endpoints:
 
-## 2. Prerequisites
-### 2.1 Set the Environment
-Adjust (if needed) `evernode-ds/scripts/env.sh`:
-- specify the network - use main.ton.dev for the main network and net.ton.dev for the developer network
-- specify notification email
+-   https://your.domain/graphql
+-   https://your.domain/arangodb (requires basic authorization)
+-   https://your.domain/metrics
 
-Set environment variables:
+### 2.1 Service interaction diagram:
 
-    $ cd ./scripts/
-    $ . ./env.sh 
+In this diagram, the bold arrows show how external messages are processed.
+
+-   The client application sends a message (represented as a GraphQL mutation operation) to the Q-Server.
+-   Q-Server sends this message (via Kafka) to Ever-node for processing.
+-   Ever-node continuously provides (via Kafka) updated blockchain data as JSON documents (blocks, messages, transactions, account states) to ArangoDB.
+-   Q-Server queries ArangoDB, thus knowing the result of the message execution.
+
+![Services interaction](./docs/system_components.svg):
+
+This scripts run all services as docker containers inside one docker bridge network.\
+Recommended system configuration for this setup are shown below:
+
+| CPU (cores) | RAM (GiB) | Storage (GiB)                          | Network (Gbit/s) |
+| ----------- | :-------- | :------------------------------------- | :--------------- |
+| 24          | 128       | 2000. (NVMe SSD disks are recommended) | 1                |
+
+See [4. Notes](#4-notes)
+
+## 3. Getting Started
+
+### 3.1 Prerequisites
+
+-   Host OS: Linux (all scripts tested on Ubuntu 20.04).
+-   DApp server is accessed via HTTPS, so your server must have a fully qualified domain name.\
+    A self-signed certificate will be received on start-up and will be renewed automatically.
+-   Installed Git, Docker Engine, Docker CLI, Docker Compose v2 or later.
+
+### 3.2 Configuration
+
+3.2.1 Set variables
+
+Check `configure.sh` and set at least these environment variables:
+
+-   NETWORK_TYPE
+-   EVERNODE_FQDN
+-   LETSENCRYPT_EMAIL
+
+3.2.2 Generate credentials to access the ArangoDB web interface 
+
+Generate credentials (usernames and password) for basic authentication and update `.htpasswd` file.\
+You can generate it by running `htpasswd -nb <name> <password>`
 
 
-### 2.2 Install Dependencies
-Ubuntu 20.04:
+3.2.3 Run configuration script
 
-    $ ./install_deps.sh
-    
-**Note**: Make sure to add your user to the docker group, or run subsequent command as superuser:
+```
+$ ./configure.sh
+```
 
+This script creates `./deploy` directory
 
-    sudo usermod -a -G docker $USER
+### 3.3 Deployment
 
+Run `./up.sh`.
 
-### 2.3 Deploy Full Node
-Deploy full node:
+After the script completes normally (it takes 30 min approx.), the node starts synchronizing its state, which can take several hours.\
+Use the following command to check the progress:
 
-    $ ./deploy.sh 2>&1 | tee ./deploy.log
-
-
-**Note**: the log generated by this command will be located in the `evernode-ds/scripts/` folder and can be useful for troubleshooting.
-
-# Check Node synchronization status
-
-Use the following command to check if the node is synced:
-
-    docker exec rnode /ton-node/tools/console -C /ton-node/configs/console.json --cmd getstats
+```
+    docker exec ever-node /ever-node/tools/console -C /ever-node/configs/console.json --cmd getstats
+```
 
 Script output example:
+
 ```
 tonlabs console 0.1.286
 COMMIT_ID: 5efe6bb8f2a974ba0e6b1ea3e58233632236e182
@@ -113,50 +142,59 @@ GIT_BRANCH: master
 	"public_overlay_key_id":	"S4TaVdGitzTApe7GFCj8DbuRIkVEbg+ODzBxhQGIUG0=",
 	"timediff":	6,
 	"shards_timediff":	6,
-	"in_current_vset_p34":	false,
-	"in_next_vset_p36":	false,
-	"last_applied_masterchain_block_id":	{"shard":"-1:8000000000000000","seq_no":9194424,"rh":"ff88c27c9bc65762da222d6c14a163a96f7c74b65d1930735e23266a3b07ee8b","fh":"208bf95293feec1afdfdbd65a63c5f3ac4cd6a6fa15ac9e4e88fbfbd6a883edc"},
-	"processed_workchain":	"masterchain",
-	"validation_stats":	{},
-	"collation_stats":	{},
-	"tps_10":	2,
-	"tps_300":	2
+     ----%<---------------------
 }
 ```
-If the `timediff` parameter is less than 10 seconds, synchronization with masterchain is complete.
-`"sync_status": "synchronization finished"` means synchronization with workchains is complete
 
-**Note**: The sync process may not start for up to one hour after node deployment, during which this command may result in error messages. If errors persist for more than an hour after deployment, review deployment log for errors and check the network status.
+If the `timediff` parameter is less than 10 seconds, synchronization with masterchain is complete.\
+`"sync_status": "synchronization finished"` means synchronization with workchains is complete.
 
+### 3.4 Tests
 
-# Stopping, restarting and deleting DApp Server
+To verify that the DApp server is actually functional, after the sync process is complete, run the test below.
+This test deploys wallet and transfers 0.5 tokens from the wallet to another address.
 
-**Note**: call docker-compose commands from the `evernode-ds/docker-compose/ton-node` folder.
-    
-To stop the node use the following command:
+```
+$ cd tests
+$ chmod o+w package-lock.json
+$ docker build --tag evernode_test .
+$ docker run --rm -e ENDPOINT=https://<your_domain>/graphql evernode_test
+```
 
-    docker-compose stop
+#### Example output
 
-To restart a stopped node use the following command:
-    
-    docker-compose restart
+```
+> npx ts-node src/wallet.ts
+You can topup your wallet from dashboard at https://dashboard.evercloud.dev
+Please send >= 1 tokens to 0:8a447eca3adde54414ab760d3633b96d5e7706a754450adfed587ac191c5b117
+awaiting...
+```
 
-To remove the node use the following commands:
-    
-    docker-compose down
-    git reset --hard origin/master
-    git clean -ffdx
-    
-**Warning**: all local files and changes will be deleted from the git tree.
+> Here the test will block until you send some tokens to that address.\
+> In devnet you can do it using our dashboard at https://dashboard.evercloud.dev or telegram bot https://t.me/everdev_giver_bot
 
-# Redeploying DApp Server
+```
+Account balance is: 100 tokens. Account type is 0
+Deploying wallet contract to address: 0:8a447eca3adde54414ab760d3633b96d5e7706a754450adfed587ac191c5b117 and waiting for transaction...
+Contract deployed. Transaction hash 318d2acfabd15a9e5ffd58c06c00074c67eca414f25e973c3332a8aeaa574bf1
+Sending 0.5 token to -1:7777777777777777777777777777777777777777777777777777777777777777
+Transfer completed. Transaction hash 54fdd8cce38c6078a25aae61c7deed2e5664c847c171048a814692440ee37610
+Transaction hash: 1d3bf7ef8a50ad38012f304a38c94fe4bca5bc1b50c2d4dd45ce2a71dc7c0921
+Transaction hash: 318d2acfabd15a9e5ffd58c06c00074c67eca414f25e973c3332a8aeaa574bf1
+Transaction hash: 54fdd8cce38c6078a25aae61c7deed2e5664c847c171048a814692440ee37610
+```
 
-Before redeploying DApp server, make sure to remove the node and reset the git branch:
-    
-    cd evernode-ds/docker-compose/ton-node
-    docker-compose down
-    git reset --hard origin/master
-    git clean -ffdx
+Congratulations! Your DApp server is set up.
 
-Otherwise redeployment will fail.
-When the branch is reset, repeat steps 2.1 - 2.3.
+## 4. Notes
+
+-   This repository is a "quick start" to get your first DApp server up and running.
+-   The installation process is simple, written in pure bash and requires installation from scratch.
+-   For simplicity, all services are deployed on one host and the system requirements for it are high, so
+    it makes sense to distribute services across different servers.\
+    After understanding this installation process, you can easily customize it for yourself.
+
+## 5. Related projects
+
+-   [itgoldio/everscale-dapp-server](https://github.com/itgoldio/everscale-dapp-server)
+    Consider this project if you prefer deployment via Ansible.

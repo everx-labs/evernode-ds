@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "msig-wallet": "npx ts-node src/wallet.ts"
+    },
+    "dependencies": {
+        "@eversdk/core": "^1.41.1",
+        "@eversdk/lib-node": "^1.41.1",
+        "ts-node": "^10.9.1"
+    }
+}

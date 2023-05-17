@@ -1,0 +1,39 @@
+version: '2.2'
+services:
+  node:
+    build:
+      context: ./build
+    container_name: ever-node
+    restart: unless-stopped
+    environment:
+      - ADNL_PORT={{ADNL_PORT}}
+      - VALIDATOR_NAME={{VALIDATOR_NAME}}
+      - NETWORK_TYPE={{NETWORK_TYPE}}
+      - CONFIGS_PATH=/ever-node/configs
+      - STATSD_DOMAIN=statsd
+      - STATSD_PORT=:9125  # here ":" is not a typo.
+    ports:
+      - {{ADNL_PORT}}:{{ADNL_PORT}}/udp
+    networks:
+      - {{NETWORK}}
+    volumes:
+      - ./configs/:/ever-node/configs/
+      - ./scripts/:/ever-node/scripts/
+      - ./logs/:/ever-node/logs/
+      - DB:/ever-node/node_db/
+      - /tmp/metrics/:/tmp/metrics/
+    entrypoint: /ever-node/scripts/entrypoint.sh
+    command: ["bash"]
+    mem_limit: {{NODE_MEMORY}}
+    logging:
+      driver: json-file
+      options:
+        max-size: "1000m"
+        max-file: "100"
+    cap_add:
+      - SYS_PTRACE
+networks:
+  {{NETWORK}}:
+    external: true
+volumes:
+  DB:

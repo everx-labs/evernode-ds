@@ -1,0 +1,97 @@
+# Scan this file for changes every 30 seconds
+# https://docs.rs/log4rs/0.8.3/log4rs/encode/pattern/index.html
+refresh_rate: 30 seconds
+
+appenders:
+  stdout:
+    kind: console
+    encoder:
+      pattern: "{d(%s.%f)} {l} [{h({t})}] {I}: {m}{n}"
+
+  stdout_ref:
+    kind: console
+    encoder:
+      pattern: "{f}:{L} {l} [{h({t})}] {I}: {m}{n}"
+
+  logfile:
+    kind: file
+    path: "/ever-node/logs/output.log"
+    encoder:
+      pattern: "{d(%s.%f)} {l} [{h({t})}] {I}: {m}{n}"
+
+  tvm_logfile:
+    kind: file
+    path: "/ever-node/logs/tvm.log"
+    encoder:
+      pattern: "{m}{n}"
+
+root:
+  level: warn
+  appenders:
+    - logfile
+
+loggers:
+
+  ton_node:
+    level: info
+    additive: false
+    appenders:
+      - logfile
+  boot:
+    level: info
+    additive: false
+    appenders:
+      - logfile
+  sync:
+    level: info
+    additive: false
+    appenders:
+      - logfile
+
+  # adnl messages
+  adnl:
+    level: error
+    additive: false
+    appenders:
+      - logfile
+  dht:
+    level: error
+    additive: false
+    appenders:
+      - logfile
+  overlay:
+    level: error
+    additive: false
+    appenders:
+      - logfile
+
+  # block messages
+  ton_block:
+    level: debug
+    appenders:
+      - logfile
+
+  # block messages
+  executor:
+    level: debug
+    appenders:
+      - logfile
+
+  # tvm messages
+  tvm:
+    level: trace
+    appenders:
+      - tvm_logfile
+
+  librdkafka:
+    level: warn
+    appenders:
+      - logfile
+
+  validator:
+    level: debug
+    appenders:
+      - stdout_ref
+
+  telemetry:
+    level: info
