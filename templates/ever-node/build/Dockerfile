@@ -1,4 +1,4 @@
-ARG RUST_VERSION=1.65.0
+ARG RUST_VERSION=1.69.0
 
 FROM ubuntu:18.04 as build
 
@@ -45,7 +45,7 @@ COPY rust_install.sh /tmp/rust_install.sh
 RUN bash -c "/tmp/rust_install.sh ${RUST_VERSION}"
 
 WORKDIR /tonlabs/ever-node
-RUN cargo update && cargo build --release --features "external_db,metrics"
+RUN cargo update && cargo build --release --features "external_db,statsd"
 
 WORKDIR /tonlabs/ton-labs-node-tools
 RUN cargo update && cargo build --release

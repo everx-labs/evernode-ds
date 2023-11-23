@@ -7,8 +7,9 @@ services:
     environment:
       - VIRTUAL_HOST=q-server
       - VIRTUAL_PORT=4000
-      - Q_DATA_MUT=http://arangodb:8529
-      - Q_DATA_HOT=http://arangodb:8529
+      - Q_ACCOUNTS=http://arangodb:8529
+      - Q_BLOCKS_HOT=http://arangodb:8529
+      - Q_TRANSACTIONS_HOT=http://arangodb:8529
       - Q_REQUESTS_MODE=kafka
       - Q_REQUESTS_SERVER=kafka:9092
       - Q_REQUESTS_TOPIC=requests
