@@ -4,15 +4,6 @@ Evernode DApp Server is a community (open source) version of [Ever Platform](htt
 
 Evernode DApp Server is compatible with [ever-sdk](https://github.com/tonlabs/ever-sdk), [everdev](https://github.com/tonlabs/everdev), [everscale-inpage-provider](https://github.com/broxus/everscale-inpage-provider), [evescale-standalone-client](https://github.com/broxus/everscale-standalone-client) and other libraries and tools for TVM blockchains.
 
-<p align="center">
-  <a href="https://docs.everscale.network/">
-    <img src="https://4031793516-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FCmimRVYKp3FChIIdVQ51%2Fuploads%2Fg8DCzYhXFbskTt0odAR4%2FEverscale%20Logo.png?alt=media&token=9484b624-6456-47b4-9757-c0fa43f4caa7" alt="Logo"   height="100">
-  </a>
-  <a href="https://github.com/venom-blockchain/developer-program">
-    <img src="https://raw.githubusercontent.com/venom-blockchain/developer-program/main/vf-dev-program.png" alt="Logo" height="100">
-  </a>
-</p>
-
 This repository contains instructions on how to run your own free instance of Evernode Platform to connect your application to TVM blockchains.\
 The instructions and scripts were verified on Ubuntu 20.04.
 
